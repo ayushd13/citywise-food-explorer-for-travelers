@@ -1,0 +1,220 @@
+ <!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Citywise Food Explorer</title>
+  <link rel="stylesheet" href="project.css" />
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1><span class="logo-icon">🍽️</span> Citywise Food Explorer</h1>
+      <p class="tagline">Discover top-rated local food gems by city</p>
+      <div class="theme-toggle">
+        <label class="switch">
+          <input type="checkbox" id="modeToggle" />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </header>
+
+    <section class="search-box">
+      <h2>Find the Best Food Options in Your City!</h2>
+      <form id="foodForm">
+        <div class="input-group">
+          <label for="city">Select City</label>
+          <select id="city" name="city">
+            <option value="sangli">Sangli</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="meal">Select Meal</label>
+          <select id="meal" name="meal">
+            <option value="breakfast">Breakfast 🍽</option>
+            <option value="lunch">Lunch 🍛</option>
+            <option value="dinner">Dinner 🌙</option>
+            <option value="snacks">Snacks 🍟</option>
+            <option value="tea_coffee">Tea & Coffee ☕</option>
+          </select>
+        </div>
+
+        <button type="submit">Show Restaurants</button>
+      </form>
+    </section>
+
+    <section class="results" id="resultsSection">
+         Dynamic content will appear here 
+    </section>
+  </div>
+
+  <script>
+    const form = document.getElementById('foodForm');
+    const resultsSection = document.getElementById('resultsSection');
+
+    const restaurantData = {
+      sangli: {
+        breakfast: [
+          { name: "Shri Ganesh Nashta Centre", rating: 4.6, type: "veg" },
+          { name: "Natraj Annexe", rating: 4.4, type: "both" },
+          { name: "New Hanuman Executive", rating: 4.3, type: "veg" },
+          { name: "Sharada Bhuvan", rating: 4.2, type: "veg" },
+          { name: "Raghvendra Nashta Center", rating: 4.2, type: "veg" },
+          { name: "Kolhapuri Dandga Vada", rating: 4.1, type: "veg" },
+          { name: "Maitri Nashta Centre", rating: 4.3, type: "veg" },
+          { name: "Apey Sushala Center", rating: 4.0, type: "veg" },
+          { name: "Hotel Nandinee", rating: 4.0, type: "veg" },
+          { name: "Sai Nashta Centre", rating: 4.1, type: "veg" },
+          { name: "Friends Dosa Corner", rating: 4.2, type: "veg" }
+        ],
+        lunch: [
+          { name: "Dalchini (Veg Meals)", rating: 4.7, type: "veg" },
+          { name: "Hotel Uday", rating: 4.3, type: "both" },
+          { name: "Hotel Natraj Annexe", rating: 4.4, type: "both" },
+          { name: "Hotel Samudra", rating: 4.2, type: "both" },
+          { name: "Hotel Shivsai", rating: 4.1, type: "both" },
+          { name: "Hotel Meghdoot", rating: 4.3, type: "veg" },
+          { name: "Hotel Ruchira", rating: 4.2, type: "veg" },
+          { name: "Hotel SS Resto", rating: 4.0, type: "both" },
+          { name: "Ajwaa Restaurant", rating: 4.1, type: "nonveg" },
+          { name: "Hotel Sai Palace", rating: 4.0, type: "both" },
+          { name: "Hotel Arya Regency", rating: 4.1, type: "both" }
+        ],
+        dinner: [
+          { name: "Dalchini", rating: 4.6, type: "veg" },
+          { name: "Winterfall Italian Finest", rating: 4.5, type: "both" },
+          { name: "Hotel Uday", rating: 4.3, type: "both" },
+          { name: "Hotel Samrat", rating: 4.1, type: "both" },
+          { name: "Hotel Shivraj", rating: 4.2, type: "both" },
+          { name: "Hotel Panchratna", rating: 4.0, type: "both" },
+          { name: "Hotel Rajdhani", rating: 4.1, type: "veg" },
+          { name: "Hotel Shivsai", rating: 4.2, type: "both" },
+          { name: "Hotel Woodrow", rating: 4.3, type: "both" },
+          { name: "Chill N Fill Chinese", rating: 4.2, type: "both" },
+          { name: "Ajwaa Restaurant", rating: 4.1, type: "nonveg" }
+        ],
+        snacks: [
+          { name: "Jimis Burger", rating: 4.5, type: "both" },
+          { name: "DC Cheesy Café", rating: 4.4, type: "both" },
+          { name: "Kranti Bhel", rating: 4.3, type: "veg" },
+          { name: "One Bite (Vijaynagar)", rating: 4.2, type: "veg" },
+          { name: "Laziz Pizza", rating: 4.3, type: "both" },
+          { name: "Apna Bhel & Juice Centre", rating: 4.1, type: "veg" },
+          { name: "Sai Snacks & Sandwich", rating: 4.0, type: "veg" },
+          { name: "Al Baith Fast Food", rating: 4.2, type: "nonveg" },
+          { name: "Bites & Beans", rating: 4.4, type: "veg" },
+          { name: "Scoops – Pizza + Snacks Café", rating: 4.3, type: "both" },
+          { name: "Chill N Fill Chinese", rating: 4.2, type: "both" }
+        ],
+        tea_coffee: [
+          { name: "Sairam Coffee", rating: 4.6 },
+          { name: "Ladybean Coffee", rating: 4.5 },
+          { name: "TeaMax Café", rating: 4.4 },
+          { name: "Café Coffee Day (CCD)", rating: 4.3 },
+          { name: "The Tea Toast Co.", rating: 4.2 },
+          { name: "Winterfall Italian Finest", rating: 4.3 },
+          { name: "Maitri Nashta Centre", rating: 4.2 },
+          { name: "Bites & Beans", rating: 4.4 },
+          { name: "Pure Veg Cloud Kitchen", rating: 4.3 },
+          { name: "DC Cheesy Café", rating: 4.2 },
+          { name: "Starbucks", rating: 4.5 }
+        ]
+      }
+    };
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const city = document.getElementById('city').value;
+      const meal = document.getElementById('meal').value;
+      const results = restaurantData[city][meal];
+
+      let html = `<h3>Top ${meal} Places in ${city.charAt(0).toUpperCase() + city.slice(1)}</h3><div class="restaurant-grid">`;
+      results.forEach(item => {
+        const stars = '★'.repeat(Math.floor(item.rating)) + '☆'.repeat(5 - Math.floor(item.rating));
+        const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name + ', ' + city)}`;
+        let typeTag = '';
+        if (item.type === 'veg') {
+          typeTag = '<span class="veg-tag">Veg</span>';
+        } else if (item.type === 'nonveg') {
+          typeTag = '<span class="nonveg-tag">Non-Veg</span>';
+        } else if (item.type === 'both') {
+          typeTag = '<span class="both-tag">Veg & Non-Veg</span>';
+        }
+        html += `
+          <div class="restaurant-card">
+            <h4>${item.name}</h4>
+            <p class="rating">${stars} (${item.rating})</p>
+            ${typeTag || ''}
+            <div class="map-wrapper">
+              <a class="map-btn" href="${mapLink}" target="_blank"> View on Map</a>
+            </div>
+          </div>
+        `;
+      });
+      html += '</div>';
+      resultsSection.innerHTML = html;
+    });
+
+    // Dark Mode Toggle
+    const toggle = document.getElementById('modeToggle');
+    toggle.addEventListener('change', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+
+  </script>
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+ <!-- Features Implemented: 
+📍 Current Location Detection using browser GPS
+
+🗺️ Google Map Embed inside each restaurant card
+
+📞 Call Now Button (will show only if phone number is added)
+
+💬 Review Box to leave a comment (basic)
+
+❤️ Add to Favourites button (future feature placeholder)
+
+  🧭 Trip Planner (future feature placeholder) --> 
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

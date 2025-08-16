@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Session Feedback</title>
+  <link rel="stylesheet" href="feedback.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="feedback-card">
+    <h2>Session feedback</h2>
+    <p class="subtitle">Please rate your experience below</p>
+
+    <div class="stars">
+      <span class="star" data-value="1">&#9733;</span>
+      <span class="star" data-value="2">&#9733;</span>
+      <span class="star" data-value="3">&#9733;</span>
+      <span class="star" data-value="4">&#9733;</span>
+      <span class="star" data-value="5">&#9733;</span>
+      <span id="rating-text">0/5 stars</span>
+    </div>
+
+    <textarea placeholder="My feedback!!" rows="4"></textarea>
+    
+    <button class="submit">Submit feedback</button>
+    
+    <div class="or">OR</div>
+
+    <div class="actions">
+      <button class="home-btn"><a href="project.html"> Home</button></a>
+      <button class="rejoin-btn">🔁 Rejoin session</button>
+    </div>
+  </div>
+
+  <script>
+    const stars = document.querySelectorAll(".star");
+    const ratingText = document.getElementById("rating-text");
+
+    stars.forEach((star, index) => {
+      star.addEventListener("click", () => {
+        stars.forEach((s, i) => {
+          s.classList.toggle("selected", i <= index);
+        });
+        ratingText.textContent = `${index + 1}/5 stars`;
+      });
+    });
+  </script>
+</body>
+</html>

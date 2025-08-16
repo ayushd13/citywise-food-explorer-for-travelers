@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Citywise Food Explorer</title>
+  <link rel="stylesheet" href="style.css" />
+  
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1><span class="logo-icon">🍽️</span> Citywise Food Explorer</h1>
+      <p class="tagline">Discover top-rated local food gems by city</p>
+      <div class="theme-toggle">
+        <label class="switch">
+          <input type="checkbox" id="modeToggle" />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </header>
+
+    <section class="search-box">
+      <h2>Find the Best Food Options in Your City!</h2>
+      <form id="foodForm">
+        <div class="input-group">
+          <label for="city">Select City</label>
+          <select id="city" name="city">
+            <option value="sangli">Sangli</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="meal">Select Meal</label>
+          <select id="meal" name="meal">
+            <option value="breakfast">Breakfast 🍽</option>
+            <option value="lunch">Lunch 🍛</option>
+            <option value="dinner">Dinner 🌙</option>
+            <option value="snacks">Snacks 🍟</option>
+            <option value="tea_coffee">Tea & Coffee ☕</option>
+          </select>
+        </div>
+
+        <button type="submit">Show Restaurants</button>
+      </form>
+    </section>
+
+    <section class="results" id="resultsSection">
+      <!-- Dynamic content will appear here -->
+     </section>
+  </div>
+
+  <script>
+    const form = document.getElementById('foodForm');
+    const resultsSection = document.getElementById('resultsSection');
+
+    const restaurantData = {
+      sangli: {
+        breakfast: [
+          { name: "Shri Ganesh Nashta Centre", rating: 4.6, type: "veg" },
+          { name: "Natraj Annexe", rating: 4.4, type: "both" },
+          { name: "New Hanuman Executive", rating: 4.3, type: "veg" },
+          { name: "Hotel Prashant", rating: 4.5, type: "both" },
+          { name: "Hotel Shree Ganesh", rating: 4.2, type: "veg" },
+          { name: "Hotel Sai Prasad", rating: 4.1, type: "veg" },
+          { name: "Hotel Sai Krupa", rating: 4.0, type: "veg" }
+            
+        ],
+        lunch: [
+          { name: "Dalchini (Veg Meals)", rating: 4.7, type: "veg" },
+          { name: "Hotel Uday", rating: 4.3, type: "both" }
+        ],
+        dinner: [
+          { name: "Dalchini", rating: 4.6, type: "veg" },
+          { name: "Winterfall Italian Finest", rating: 4.5, type: "both" }
+        ],
+        snacks: [
+          { name: "Jimis Burger", rating: 4.5, type: "both" },
+          { name: "DC Cheesy Café", rating: 4.4, type: "both" }
+        ],
+        tea_coffee: [
+          { name: "Sairam Coffee", rating: 4.6 },
+          { name: "Ladybean Coffee", rating: 4.5 }
+        ]
+      }
+    };
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const city = document.getElementById('city').value;
+      const meal = document.getElementById('meal').value;
+      const results = restaurantData[city][meal];
+
+      let html = `<h3 style="padding-left:20px;">Top ${meal} Places in ${city.charAt(0).toUpperCase() + city.slice(1)}</h3><div class="restaurant-grid">`;
+      results.forEach(item => {
+        const stars = '★'.repeat(Math.floor(item.rating)) + '☆'.repeat(5 - Math.floor(item.rating));
+        const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name + ', ' + city)}`;
+        let typeTag = '';
+        if (item.type === 'veg') {
+          typeTag = '<span class="veg-tag">Veg</span>';
+        } else if (item.type === 'nonveg') {
+          typeTag = '<span class="nonveg-tag">Non-Veg</span>';
+        } else if (item.type === 'both') {
+          typeTag = '<span class="both-tag">Veg & Non-Veg</span>';
+        }
+        html += `
+          <div class="restaurant-card">
+            <img src="https://source.unsplash.com/400x250/?restaurant,food" alt="${item.name}">
+            <div class="card-content">
+              <h4>${item.name}</h4>
+              <p class="rating">${stars} (${item.rating})</p>
+              ${typeTag || ''}
+              <div class="map-wrapper">
+                <a class="map-btn" href="${mapLink}" target="_blank"> View on Map</a>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      html += '</div>';
+      resultsSection.innerHTML = html;
+    });
+
+    // Dark Mode Toggle
+    const toggle = document.getElementById('modeToggle');
+    toggle.addEventListener('change', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+  </script>
+</body>
+</html> 

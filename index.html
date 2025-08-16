@@ -1,35 +1,82 @@
-<!DOCTYPE html>
+ <!-- Main code -->
+
+  <!DOCTYPE html>
 <html lang="en">
+<!--=========================================================================================================================================-->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Citywise Food Explorer</title>
   <link rel="stylesheet" href="style.css" />
+
+  
 </head>
+<!--========================================================================================================================================-->
 <body>
-  <h1>Citywise Food Explorer</h1>
+  <div class="container">
+    <header>
+      <h1><span class="logo-icon">🍽 Citywise Food Explorer</span></h1>
+      <p class="tagline">Discover top-rated local food gems by city</p>
+      <div class="theme-toggle">
+        <label class="switch">
+          <input type="checkbox" id="modeToggle" />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </header>
+<!--========================================================================================================================================-->
+    <section class="search-box">
+      <h2>Find the Best Food Options in Your City!</h2>
+      <form id="foodForm">
+        <div class="input-group">
+          <label for="city">Select City</label>
+          <select id="city" name="city">
+            <option value="sangli">Sangli</option>
+            <option value="pune">Pune</option>
+            <option value="islampur">Islampur</option>
+            <option value="kolhapur">Kolhapur</option>
+            <option value="mumbai">Mumbai</option>
+            <option value="nashik">Nashik</option>
+            <option value="aurangabad">Aurangabad</option>
+            <option value="nagpur">Nagpur</option>
+            <option value="solapur">Solapur</option>
+            <option value="satara">Satara</option>
+            <option value="ahmedabad">Ahmedabad</option>
+          </select>
+        </div>
+<!--========================================================================================================================================-->
+        <div class="input-group">
+          <label for="meal">Select Meal</label>
+          <select id="meal" name="meal">
+            <option value="breakfast">Breakfast 🍽</option>
+            <option value="lunch">Lunch 🍛</option>
+            <option value="dinner">Dinner 🌙</option>
+            <option value="snacks">Snacks 🍟</option>
+            <option value="tea_coffee">Tea & Coffee ☕</option>
+          </select>
+        </div>
+<!--========================================================================================================================================-->
+        <button type="submit">Show Restaurants</button>
+        
+        
+      </form>
+      
+    </section>
+   
+   
+<!--========================================================================================================================================-->
+    <section class="results" id="resultsSection">
+      <!-- Dynamic content will appear here -->
+    </section>
+ 
 
-  <form id="searchForm">
-    <label for="city">Select City:</label>
-    <select id="city">
-      <option value="Sangli">Sangli</option>
-      <option value="Pune">Pune</option>
-      <!-- Add more cities -->
-    </select>
+<section class="results" id="resultsSection">
+  <!-- Dynamic content will appear here -->
+</section> <br>
+ <center><a href="feedback.html"><button type="click">give here feedback</button></a></center>
+<!--========================================================================================================================================-->
+  
+   <script src="script.js"></script> 
+  </body>
 
-    <label for="meal">Select Meal:</label>
-    <select id="meal">
-      <option value="breakfast">Breakfast</option>
-      <option value="lunch">Lunch</option>
-      <!-- Add more meals -->
-    </select>
-
-    <button type="submit">Search</button>
-  </form>
-
-  <div id="restaurantResults"></div>
-
-  <!-- Link the external JS file -->
-  <script src="script.js"></script>
-</body>
 </html>
