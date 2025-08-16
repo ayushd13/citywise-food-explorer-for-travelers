@@ -1,0 +1,1167 @@
+
+
+        <!-- 1st try -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Citywise Food Explorer</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: url('https://images.unsplash.com/photo-1528605248644-14dd04022da1') no-repeat center center/cover;
+        background-attachment: fixed;
+    }
+
+    /* Blur background but keep content sharp */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        filter: blur(6px) brightness(0.6);
+        z-index: -1;
+    }
+
+    header {
+        text-align: center;
+        color: white;
+        padding: 20px;
+    }
+
+    .filter-box {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    select, button {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+    }
+
+    button {
+        background-color: orange;
+        color: white;
+        cursor: pointer;
+    }
+
+    .restaurant-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+        transform: scale(1.03);
+    }
+
+    .card img {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+    }
+
+    .card-content {
+        padding: 10px;
+    }
+
+    .rating {
+        color: gold;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 4px 8px;
+        margin-top: 5px;
+        background: #ffebcc;
+        border-radius: 5px;
+        font-size: 13px;
+    }
+
+</style>
+</head>
+<body>
+
+<header>
+    <h1>🍽️ Citywise Food Explorer</h1>
+    <p>Find the best places for Breakfast, Lunch, Dinner, Snacks, Tea & Coffee</p>
+</header>
+
+<div class="filter-box">
+    <select id="city">
+        <option value="sangli">Sangli</option>
+        <option value="pune">Pune</option>
+    </select>
+    <select id="meal">
+        <option value="breakfast">Breakfast</option>
+        <option value="lunch">Lunch</option>
+        <option value="dinner">Dinner</option>
+        <option value="snacks">Snacks</option>
+        <option value="teaCoffee">Tea & Coffee</option>
+    </select>
+    <button onclick="showRestaurants()">Show Restaurants</button>
+</div>
+
+<div id="restaurants" class="restaurant-grid"></div>
+
+<script>
+const data = {
+    sangli: {
+        breakfast: [
+            { name: "Dalchini Veg", rating: "⭐ 4.5", food: "Masala Dosa", img: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90" },
+            { name: "Sairam Cafe", rating: "⭐ 4.6", food: "Poha", img: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092" }
+        ],
+        lunch: [
+            { name: "Green Leaf", rating: "⭐ 4.7", food: "Veg Thali", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c" }
+        ]
+    },
+    pune: {
+        breakfast: [
+            { name: "Vohuman Cafe", rating: "⭐ 4.8", food: "Cheese Omelette", img: "https://images.unsplash.com/photo-1565958011703-44e7b4a4dc2b" }
+        ],
+        lunch: [
+            { name: "Vaishali", rating: "⭐ 4.7", food: "South Indian", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836" }
+        ]
+    }
+};
+
+function showRestaurants() {
+    const city = document.getElementById("city").value;
+    const meal = document.getElementById("meal").value;
+    const results = data[city][meal] || [];
+    const container = document.getElementById("restaurants");
+    container.innerHTML = "";
+
+    if (results.length === 0) {
+        container.innerHTML = "<p style='color:white;'>No restaurants found.</p>";
+        return;
+    }
+
+    results.forEach(r => {
+        container.innerHTML += `
+            <div class="card">
+                <img src="${r.img}" alt="${r.name}">
+                <div class="card-content">
+                    <h3>${r.name}</h3>
+                    <div class="rating">${r.rating}</div>
+                    <div class="tag">🍴 ${r.food}</div>
+                </div>
+            </div>
+        `;
+    });
+}
+</script>
+
+</body>
+</html> -->
+
+                            <!-- 2nd try --> 
+
+ <!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Citywise Food Explorer</title>
+  <style>
+    :root{
+      --bg:#f7f7fb; --card:#ffffff; --text:#1f2937; --muted:#6b7280; --brand:#2563eb; --accent:#10b981; --warn:#ef4444;
+      --shadow:0 10px 25px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial; color:var(--text); background:var(--bg);}    
+
+    /* App Shell */
+    header.hero{
+      position:relative;
+      min-height:60vh;
+      display:grid;place-items:center;
+      overflow:hidden;
+      color:#fff;
+      text-align:center;
+    }
+    .hero::before{
+      content:""; position:absolute; inset:0; 
+      background:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1400&auto=format&fit=crop') center/cover no-repeat; 
+      filter:blur(6px) brightness(.6); transform:scale(1.05);
+    }
+    .hero-inner{position:relative; z-index:1; padding:24px;}
+    .brand{display:flex; gap:10px; align-items:center; justify-content:center;}
+    .brand .logo{font-size:40px}
+    .brand h1{margin:0;font-weight:800;letter-spacing:.3px}
+    .tagline{margin:6px 0 22px;color:#e5e7eb}
+
+    /* Controls */
+    .controls{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+    select,button{padding:12px 14px;border-radius:10px;border:1px solid #e5e7eb;background:#ffffffaa;backdrop-filter:blur(4px);font-size:15px}
+    button{background:var(--brand);color:#fff;border:none;box-shadow:var(--shadow);cursor:pointer;font-weight:600}
+    button:hover{filter:brightness(.95)}
+
+    /* Toggle */
+    .topbar{position:absolute; top:14px; right:14px; z-index:2; display:flex; gap:12px; align-items:center}
+    .switch{position:relative;width:54px;height:28px}
+    .switch input{opacity:0;width:0;height:0}
+    .slider{position:absolute;inset:0;background:#334155;border-radius:30px;cursor:pointer}
+    .slider:before{content:"";position:absolute;width:22px;height:22px;left:3px;top:3px;border-radius:50%;background:#fff;transition:.25s}
+    .switch input:checked + .slider{background:#111827}
+    .switch input:checked + .slider:before{transform:translateX(26px)}
+
+    /* Results page header */
+    .subheader{position:sticky; top:0; z-index:5; background:var(--card); border-bottom:1px solid #e5e7eb; padding:14px 20px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between}
+    .breadcrumbs{font-size:14px;color:var(--muted)}
+
+    /* Grid */
+    .wrap{max-width:1200px;margin:0 auto;padding:24px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+    .card{background:var(--card); border:1px solid #e5e7eb; border-radius:16px; box-shadow:var(--shadow); overflow:hidden; display:flex; flex-direction:column}
+    .thumb{aspect-ratio:4/3; background:#e5e7eb; width:100%; object-fit:cover}
+    .content{padding:14px 14px 16px}
+    .title{margin:0 0 4px;font-size:18px}
+    .meta{display:flex; align-items:center; gap:8px; color:var(--muted); font-size:13px}
+    .badges{margin-top:8px; display:flex; gap:8px; flex-wrap:wrap}
+    .badge{font-size:12px; padding:4px 8px; border-radius:999px; background:#f1f5f9; color:#0f172a; border:1px solid #e2e8f0}
+    .badge.veg{background:#ecfdf5; color:#065f46; border-color:#a7f3d0}
+    .badge.nonveg{background:#fef2f2; color:#991b1b; border-color:#fecaca}
+    .actions{margin-top:12px; display:flex; gap:8px}
+    .btn{flex:1; text-align:center; text-decoration:none; background:#0ea5e9; color:white; padding:8px 10px; border-radius:10px; font-weight:600}
+    .btn.secondary{background:#64748b}
+
+    /* Rating Stars */
+    .stars{--rating:4.2; position:relative; display:inline-block; font-size:16px; line-height:1}
+    .stars::before{content:"★★★★★"; letter-spacing:2px; background:linear-gradient(90deg,#fbbf24 calc(var(--rating)/5*100%),#e5e7eb 0); -webkit-background-clip:text; background-clip:text; color:transparent}
+
+    /* Empty state */
+    .empty{padding:40px; text-align:center; color:var(--muted)}
+
+    /* Dark mode */
+    body.dark{--bg:#0b0f17; --card:#0f172a; --text:#e5e7eb; --muted:#94a3b8; --brand:#22c55e; --accent:#10b981; --shadow:0 10px 25px rgba(0,0,0,.4)}
+    body.dark .hero::before{filter:blur(6px) brightness(.35)}
+    body.dark select{background:#0b1220;color:var(--text);border-color:#1f2937}
+    body.dark .subheader{background:#0f172a; border-color:#1f2937}
+    body.dark .badge{background:#0b1220; border-color:#1f2937; color:var(--text)}
+  </style>
+</head>
+<body>
+
+  HERO (Page 1) 
+   <header class="hero" id="page-home">
+    <div class="topbar">
+      <label class="switch" title="Toggle dark mode">
+        <input type="checkbox" id="modeToggle" />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="hero-inner">
+      <div class="brand">
+        <div class="logo">🍽️</div>
+        <h1>Citywise Food Explorer</h1>
+      </div>
+      <p class="tagline">Discover top-rated local food gems by city</p>
+
+      <div class="controls">
+        <select id="city">
+          <option value="sangli">Sangli</option>
+        </select>
+        <select id="meal">
+          <option value="breakfast">Breakfast 🍽</option>
+          <option value="lunch">Lunch 🍛</option>
+          <option value="dinner">Dinner 🌙</option>
+          <option value="snacks">Snacks 🍟</option>
+          <option value="tea_coffee">Tea & Coffee ☕</option>
+        </select>
+        <button id="goBtn">Show Restaurants</button>
+      </div>
+    </div>
+  </header>
+
+  RESULTS (Page 2) 
+  <div id="page-results" style="display:none">
+    <div class="subheader">
+      <div class="breadcrumbs" id="crumbs">Home ▸ Results</div>
+      <div class="controls">
+        <select id="city2"></select>
+        <select id="meal2"></select>
+        <button id="backBtn" class="btn" style="background:#374151">← Back</button>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div id="results" class="grid"></div>
+      <div id="empty" class="empty" style="display:none">No results found.</div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Data (10 per category for Sangli) ----------
+    // Note on images: Using Unsplash keyword-based images for visual quality and licensing.
+    // Replace img with real photo URLs later if you have them.
+    const restaurantData = {
+      sangli: {
+        breakfast: [
+          { name: "Shri Ganesh Nashta Centre", rating: 4.6, type: "veg" },
+          { name: "Natraj Annexe", rating: 4.4, type: "both" },
+          { name: "New Hanuman Executive", rating: 4.3, type: "veg" },
+          { name: "Sharada Bhuvan", rating: 4.2, type: "veg" },
+          { name: "Raghvendra Nashta Center", rating: 4.2, type: "veg" },
+          { name: "Kolhapuri Dandga Vada", rating: 4.1, type: "veg" },
+          { name: "Maitri Nashta Centre", rating: 4.3, type: "veg" },
+          { name: "Apey Sushala Center", rating: 4.0, type: "veg" },
+          { name: "Hotel Nandinee", rating: 4.0, type: "veg" },
+          { name: "Friends Dosa Corner", rating: 4.2, type: "veg" }
+        ],
+        lunch: [
+          { name: "Dalchini (Veg Meals)", rating: 4.7, type: "veg" },
+          { name: "Hotel Uday", rating: 4.3, type: "both" },
+          { name: "Hotel Natraj Annexe", rating: 4.4, type: "both" },
+          { name: "Hotel Samudra", rating: 4.2, type: "both" },
+          { name: "Hotel Shivsai", rating: 4.1, type: "both" },
+          { name: "Hotel Meghdoot", rating: 4.3, type: "veg" },
+          { name: "Hotel Ruchira", rating: 4.2, type: "veg" },
+          { name: "Hotel SS Resto", rating: 4.0, type: "both" },
+          { name: "Ajwaa Restaurant", rating: 4.1, type: "nonveg" },
+          { name: "Hotel Sai Palace", rating: 4.0, type: "both" }
+        ],
+        dinner: [
+          { name: "Dalchini", rating: 4.6, type: "veg" },
+          { name: "Winterfall Italian Finest", rating: 4.5, type: "both" },
+          { name: "Hotel Uday", rating: 4.3, type: "both" },
+          { name: "Hotel Samrat", rating: 4.1, type: "both" },
+          { name: "Hotel Shivraj", rating: 4.2, type: "both" },
+          { name: "Hotel Panchratna", rating: 4.0, type: "both" },
+          { name: "Hotel Rajdhani", rating: 4.1, type: "veg" },
+          { name: "Hotel Shivsai", rating: 4.2, type: "both" },
+          { name: "Hotel Woodrow", rating: 4.3, type: "both" },
+          { name: "Chill N Fill Chinese", rating: 4.2, type: "both" }
+        ],
+        snacks: [
+          { name: "Jimis Burger", rating: 4.5, type: "both" },
+          { name: "DC Cheesy Café", rating: 4.4, type: "both" },
+          { name: "Kranti Bhel", rating: 4.3, type: "veg" },
+          { name: "One Bite (Vijaynagar)", rating: 4.2, type: "veg" },
+          { name: "Laziz Pizza", rating: 4.3, type: "both" },
+          { name: "Apna Bhel & Juice Centre", rating: 4.1, type: "veg" },
+          { name: "Sai Snacks & Sandwich", rating: 4.0, type: "veg" },
+          { name: "Al Baith Fast Food", rating: 4.2, type: "nonveg" },
+          { name: "Bites & Beans", rating: 4.4, type: "veg" },
+          { name: "Scoops – Pizza + Snacks Café", rating: 4.3, type: "both" }
+        ],
+        tea_coffee: [
+          { name: "Sairam Coffee", rating: 4.6, type: "veg" },
+          { name: "Ladybean Coffee", rating: 4.5, type: "veg" },
+          { name: "TeaMax Café", rating: 4.4, type: "veg" },
+          { name: "Café Coffee Day", rating: 4.3, type: "veg" },
+          { name: "The Tea Toast Co.", rating: 4.2, type: "veg" },
+          { name: "Winterfall Italian Finest", rating: 4.3, type: "both" },
+          { name: "Maitri Nashta Centre", rating: 4.2, type: "veg" },
+          { name: "Bites & Beans", rating: 4.4, type: "veg" },
+          { name: "DC Cheesy Café", rating: 4.2, type: "both" },
+          { name: "Pure Veg Cloud Kitchen", rating: 4.1, type: "veg" }
+        ]
+      }
+    };
+
+    // Helpers
+    const qsel = (s,root=document)=>root.querySelector(s);
+    const qselAll = (s,root=document)=>[...root.querySelectorAll(s)];
+
+    const citySel1 = qsel('#city');
+    const mealSel1 = qsel('#meal');
+    const citySel2 = qsel('#city2');
+    const mealSel2 = qsel('#meal2');
+    const goBtn = qsel('#goBtn');
+    const backBtn = qsel('#backBtn');
+
+    // Populate secondary selects
+    function populateSelectors(){
+      const cities = Object.keys(restaurantData);
+      citySel2.innerHTML = cities.map(c=>`<option value="${c}">${cap(c)}</option>`).join('');
+      mealSel2.innerHTML = [
+        ['breakfast','Breakfast 🍽'],
+        ['lunch','Lunch 🍛'],
+        ['dinner','Dinner 🌙'],
+        ['snacks','Snacks 🍟'],
+        ['tea_coffee','Tea & Coffee ☕']
+      ].map(([v,l])=>`<option value="${v}">${l}</option>`).join('');
+    }
+    populateSelectors();
+
+    // Router-like behavior using hash
+    function navigate(city, meal){
+      location.hash = `#/results?city=${city}&meal=${meal}`;
+    }
+    function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+    function render(){
+      const hash = location.hash;
+      const home = qsel('#page-home');
+      const results = qsel('#page-results');
+      if(!hash || !hash.startsWith('#/results')){
+        home.style.display = '';
+        results.style.display = 'none';
+        return;
+      }
+      const params = new URLSearchParams(hash.split('?')[1]||'');
+      const city = params.get('city') || 'sangli';
+      const meal = params.get('meal') || 'breakfast';
+
+      // sync selectors
+      citySel2.value = city;
+      mealSel2.value = meal;
+
+      // crumbs
+      qsel('#crumbs').textContent = `Home ▸ ${cap(city)} ▸ ${cap(meal.replace('_',' & '))}`;
+
+      // draw cards
+      draw(city, meal);
+
+      home.style.display = 'none';
+      results.style.display = '';
+    }
+
+    function draw(city, meal){
+      const list = (restaurantData[city] && restaurantData[city][meal]) ? restaurantData[city][meal] : [];
+      const grid = qsel('#results');
+      const empty = qsel('#empty');
+      grid.innerHTML = '';
+      if(list.length===0){ empty.style.display=''; return; } else { empty.style.display='none'; }
+
+      list.forEach(item=>{
+        const starsVal = item.rating || 4.0;
+        const typeTag = item.type==='veg' ? 'veg' : item.type==='nonveg' ? 'nonveg' : '';
+        const mapLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name + ', ' + city)}`;
+        const img = `https://source.unsplash.com/featured/600x450/?${encodeURIComponent(item.name)},food,Sangli`;
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img class="thumb" src="${img}" alt="${item.name}">
+          <div class="content">
+            <h3 class="title">${item.name}</h3>
+            <div class="meta">
+              <span class="stars" style="--rating:${starsVal}"></span>
+              <span>${starsVal.toFixed(1)}</span>
+            </div>
+            <div class="badges">
+              ${typeTag?`<span class="badge ${typeTag}">${typeTag==='veg'?'Veg':typeTag==='nonveg'?'Non-Veg':'Both'}</span>`:''}
+              <span class="badge">${cap(meal.replace('_',' & '))}</span>
+            </div>
+            <div class="actions">
+              <a class="btn" href="${mapLink}" target="_blank" rel="noopener">View on Map</a>
+              <a class="btn secondary" href="#" onclick="alert('Reviews coming soon!')">Reviews</a>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Events
+    goBtn.addEventListener('click', ()=>{
+      navigate(citySel1.value, mealSel1.value);
+    });
+    backBtn.addEventListener('click', ()=>{ location.hash = ''; });
+
+    citySel2.addEventListener('change', ()=> navigate(citySel2.value, mealSel2.value));
+    mealSel2.addEventListener('change', ()=> navigate(citySel2.value, mealSel2.value));
+
+    window.addEventListener('hashchange', render);
+    render();
+
+    // Dark mode
+    const toggle = document.getElementById('modeToggle');
+    toggle.addEventListener('change', ()=> document.body.classList.toggle('dark'));
+  </script>
+</body>
+</html>  -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 3rd try -->
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Citywise Food Explorer</title>
+<style>
+  :root{
+    --bg:#f6f7fb;--card:#fff;--text:#0f172a;--muted:#64748b;--brand:#2563eb;--accent:#10b981;--border:#e5e7eb;
+    --shadow:0 16px 40px rgba(0,0,0,.10);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;color:var(--text);background:var(--bg)}
+  /* HERO */
+  .hero{position:relative;min-height:58vh;display:grid;place-items:center;overflow:hidden;color:#fff;text-align:center}
+  .hero::before{content:"";position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;filter:blur(6px) brightness(.55);transform:scale(1.06)}
+  .hero-inner{position:relative;z-index:1;padding:24px}
+  .brand{display:flex;gap:12px;align-items:center;justify-content:center}
+  .brand .logo{font-size:46px}
+  .brand h1{margin:0;font-weight:800;letter-spacing:.3px}
+  .tagline{margin:10px 0 22px;color:#e5e7eb}
+  .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  select,button,.input{padding:12px 14px;border-radius:12px;border:1px solid #ffffff44;background:#ffffffb3;backdrop-filter:blur(4px);font-size:15px}
+  button{background:var(--brand);color:#fff;border:none;box-shadow:var(--shadow);cursor:pointer;font-weight:700}
+  button:hover{filter:brightness(.95)}
+  /* floating dark mode */
+  .dark-toggle{position:fixed;right:14px;top:14px;z-index:50;background:#111827;color:#fff;border:none;border-radius:999px;padding:10px 14px;cursor:pointer;box-shadow:var(--shadow)}
+  /* SUBHEADER */
+  .subheader{position:sticky;top:0;z-index:6;background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .crumbs{font-size:14px;color:var(--muted)}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{padding:10px 14px;border-radius:999px;border:1px solid var(--border);background:#f8fafc;cursor:pointer;font-weight:600}
+  .chip.active{background:var(--brand);border-color:var(--brand);color:#fff}
+  /* GRID + BIGGER CARDS */
+  .wrap{max-width:1200px;margin:0 auto;padding:24px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;transition:transform .15s ease, box-shadow .15s ease}
+  .card:hover{transform:translateY(-3px)}
+  .thumb{aspect-ratio:16/10;background:#e5e7eb;width:100%;object-fit:cover}
+  .content{padding:16px 16px 18px}
+  .title{margin:0 0 6px;font-size:20px}
+  .meta{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14px}
+  .rating-chip{font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid var(--border)}
+  .rating-hi{background:#ecfdf5;color:#065f46;border-color:#a7f3d0}
+  .rating-med{background:#fff7ed;color:#9a3412;border-color:#fed7aa}
+  .rating-low{background:#fef2f2;color:#991b1b;border-color:#fecaca}
+  .badges{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+  .badge{font-size:12px;padding:5px 9px;border-radius:999px;background:#f1f5f9;color:#0f172a;border:1px solid #e2e8f0}
+  .badge.veg{background:#ecfdf5;color:#065f46;border-color:#a7f3d0}
+  .badge.nonveg{background:#fef2f2;color:#991b1b;border-color:#fecaca}
+  .actions{margin-top:14px;display:flex;gap:10px}
+  .btn{flex:1;text-align:center;text-decoration:none;background:#0ea5e9;color:#fff;padding:11px 12px;border-radius:12px;font-weight:800}
+  .btn.secondary{background:#64748b}
+  .btn.ghost{background:#f1f5f9;color:#0f172a}
+  .fav{position:absolute;right:12px;top:12px;background:#ffffffee;border:1px solid var(--border);width:40px;height:40px;border-radius:999px;display:grid;place-items:center;cursor:pointer;font-size:18px}
+  .fav.filled{color:#ef4444}
+  /* SEARCHBAR */
+  .searchbar{display:flex;gap:8px;flex:1}
+  .searchbar .input{background:#fff;border-color:var(--border);flex:1}
+  /* STARS */
+  .stars{--rating:4.2;position:relative;display:inline-block;font-size:17px;line-height:1}
+  .stars::before{content:"★★★★★";letter-spacing:2px;background:linear-gradient(90deg,#fbbf24 calc(var(--rating)/5*100%),#e5e7eb 0);-webkit-background-clip:text;background-clip:text;color:transparent}
+  /* MODALS */
+  .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.5);z-index:60}
+  .modal.open{display:flex}
+  .modal-card{background:#fff;border-radius:16px;max-width:920px;width:94%;overflow:hidden;box-shadow:var(--shadow)}
+  .modal-top{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--border)}
+  .modal-top h4{margin:0}
+  .modal-body{padding:16px}
+  .modal-body iframe{width:100%;height:60vh;border:0}
+  .form-grid{display:grid;gap:12px}
+  .form-grid.two{grid-template-columns:1fr 1fr}
+  .form-grid label{font-size:14px;color:var(--muted)}
+  .form-grid input,.form-grid textarea,.form-grid select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:#fff}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 14px;border-radius:10px;display:none;z-index:70}
+  .toast.show{display:block;animation:fadeout 2.4s ease forwards}
+  @keyframes fadeout{0%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translate(-50%,10px)}}
+  /* FEEDBACK FAB */
+  .fab{position:fixed;right:16px;bottom:18px;z-index:55}
+  .fab button{background:#22c55e;color:#001b0e;border:none;border-radius:999px;padding:12px 16px;font-weight:800;box-shadow:var(--shadow);cursor:pointer}
+  /* DARK MODE */
+  body.dark{--bg:#0b0f17;--card:#0f172a;--text:#e5e7eb;--muted:#9aa7bd;--brand:#22c55e;--border:#1f2937;--shadow:0 16px 44px rgba(0,0,0,.5)}
+  body.dark .hero::before{filter:blur(6px) brightness(.35)}
+  body.dark select,body.dark .input{background:#0b1220;color:var(--text);border-color:#1f2937}
+  body.dark .chip{background:#0b1220;border-color:#1f2937;color:var(--text)}
+  body.dark .chip.active{background:var(--brand);color:#001b0e}
+  body.dark .modal-card{background:#0f172a}
+  body.dark .btn.ghost{background:#0b1220;color:#e5e7eb}
+</style>
+</head>
+<body>
+<script>
+document.body.classList.add('dark');
+</script>
+
+  <!-- HOME -->
+  <section class="hero" id="page-home">
+    <div class="hero-inner">
+      <div class="brand">
+        <div class="logo">🍽️</div>
+        <h1>Citywise Food Explorer</h1>
+      </div>
+      <p class="tagline">Pick a city & meal — see real-looking places with photos, ratings, reviews & maps.</p>
+      <div class="controls">
+        <select id="city1"></select>
+        <select id="meal1"></select>
+        <button id="goBtn">Show Restaurants</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <div id="page-results" style="display:none">
+    <div class="subheader">
+      <div class="crumbs" id="crumbs">Home ▸ Results</div>
+      <div class="chips" id="mealChips"></div>
+      <div class="controls" style="margin-left:auto;gap:10px">
+        <select id="city2" title="City"></select>
+        <div class="searchbar">
+          <input id="searchInput" class="input" placeholder="Search restaurant name…"/>
+          <button id="clearSearch">Clear</button>
+        </div>
+        <button id="backBtn" class="btn" style="background:#374151">← Back</button>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div id="results" class="grid"></div>
+      <div id="empty" class="empty" style="display:none">No results. Try another category or search.</div>
+    </div>
+  </div>
+
+  <!-- MAP MODAL -->
+  <div class="modal" id="mapModal">
+    <div class="modal-card">
+      <div class="modal-top">
+        <h4 id="mapTitle">Map</h4>
+        <button id="closeMap">✕</button>
+      </div>
+      <div class="modal-body">
+        <iframe id="mapFrame" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS MODAL -->
+  <div class="modal" id="reviewsModal">
+    <div class="modal-card">
+      <div class="modal-top">
+        <h4 id="reviewsTitle">Reviews</h4>
+        <button id="closeReviews">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="reviewsList" style="margin-bottom:14px"></div>
+        <form id="reviewForm" class="form-grid">
+          <div class="form-grid two">
+            <div>
+              <label>Name</label>
+              <input id="revName" required placeholder="Your name"/>
+            </div>
+            <div>
+              <label>Rating</label>
+              <select id="revRating">
+                <option>5</option><option>4</option><option>3</option><option>2</option><option>1</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label>Review</label>
+            <textarea id="revText" rows="3" placeholder="Share your experience…" required></textarea>
+          </div>
+          <button class="btn" type="submit">Submit Review</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEEDBACK MODAL -->
+  <div class="modal" id="feedbackModal">
+    <div class="modal-card">
+      <div class="modal-top">
+        <h4>Website Feedback</h4>
+        <button id="closeFeedback">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="feedbackForm" class="form-grid">
+          <div class="form-grid two">
+            <div>
+              <label>Name</label>
+              <input id="fbName" placeholder="Your name" required/>
+            </div>
+            <div>
+              <label>Email</label>
+              <input id="fbEmail" type="email" placeholder="you@example.com"/>
+            </div>
+          </div>
+          <div>
+            <label>Message</label>
+            <textarea id="fbMsg" rows="4" placeholder="Tell us what to improve…" required></textarea>
+          </div>
+          <button class="btn" type="submit">Send Feedback</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- WELCOME MODAL -->
+  <div class="modal" id="welcomeModal">
+    <div class="modal-card" style="max-width:560px">
+      <div class="modal-top">
+        <h4>Welcome 👋</h4>
+        <button id="closeWelcome">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Explore the best food spots by city & meal. Toggle 🌙 dark mode, read/add reviews, and send us feedback anytime.</p>
+        <button id="okWelcome" class="btn" style="margin-top:10px">Let’s Go</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEEDBACK FAB -->
+  <div class="fab">
+    <button id="openFeedback">💬 Feedback</button>
+  </div>
+
+  <div class="toast" id="toast">Saved!</div>
+
+<script>
+/* ====== CONFIG ====== */
+const CITIES = ["Sangli","Pune","Pimpri-Chinchwad","Kolhapur","Solapur"];
+const MEALS = [
+  ["breakfast","Breakfast 🍽"],
+  ["lunch","Lunch 🍛"],
+  ["dinner","Dinner 🌙"],
+  ["snacks","Snacks 🍟"],
+  ["tea_coffee","Tea & Coffee ☕"]
+];
+const cap = s => s.charAt(0).toUpperCase()+s.slice(1);
+const humanMeal = k => ({tea_coffee:"Tea & Coffee ☕"})[k] || cap(k);
+
+/* ====== DATA (5 per category; replace with your real names/images) ====== */
+/* For real images: set each item's `img` to a real photo URL */
+const R=(name,rating,type="both",img=null)=>({name,rating,type,img});
+const placeholderImg=(nm,ct)=>`https://source.unsplash.com/featured/900x700/?${encodeURIComponent(nm+' '+ct+', restaurant')}`;
+
+const restaurantData = {
+  "Sangli": {
+    breakfast:[
+      R("Shri Ganesh Nashta Centre",4.6,"veg"),
+      R("Natraj Annexe",4.4,"both"),
+      R("New Hanuman Executive",4.3,"veg"),
+      R("Sharada Bhuvan",4.2,"veg"),
+      R("Friends Dosa Corner",4.2,"veg"),
+    ],
+    lunch:[
+      R("Dalchini Veg Meals",4.7,"veg"),
+      R("Hotel Uday",4.3,"both"),
+      R("Natraj Annexe",4.4,"both"),
+      R("Hotel Samudra",4.2,"both"),
+      R("Hotel Meghdoot",4.3,"veg"),
+    ],
+    dinner:[
+      R("Winterfall Italian Finest",4.5,"both"),
+      R("Hotel Uday",4.3,"both"),
+      R("Hotel Samrat",4.1,"both"),
+      R("Hotel Shivraj",4.2,"both"),
+      R("Hotel Woodrow",4.3,"both"),
+    ],
+    snacks:[
+      R("Jimis Burger",4.5,"both"),
+      R("DC Cheesy Café",4.4,"both"),
+      R("Kranti Bhel",4.3,"veg"),
+      R("One Bite Vijaynagar",4.2,"veg"),
+      R("Laziz Pizza",4.3,"both"),
+    ],
+    tea_coffee:[
+      R("Sairam Coffee",4.6,"veg"),
+      R("Ladybean Coffee",4.5,"veg"),
+      R("TeaMax Café",4.4,"veg"),
+      R("Café Coffee Day",4.3,"veg"),
+      R("The Tea Toast Co.",4.2,"veg"),
+    ]
+  },
+  "Pune": {
+    breakfast:[
+      R("Vaishali",4.6,"veg"),
+      R("Vohuman Cafe",4.5,"both"),
+      R("Goodluck Cafe",4.4,"both"),
+      R("Wadeshwar FC Road",4.5,"veg"),
+      R("Bedekar Misal",4.5,"veg"),
+    ],
+    lunch:[
+      R("Sukanta Pure Veg",4.5,"veg"),
+      R("Shabree",4.4,"veg"),
+      R("George Restaurant",4.3,"nonveg"),
+      R("Baan Tao - Hyatt",4.5,"both"),
+      R("Durvankur Dining Hall",4.5,"veg"),
+    ],
+    dinner:[
+      R("Barbeque Nation - FC Road",4.4,"both"),
+      R("Malaka Spice",4.5,"both"),
+      R("Zamu's Place",4.4,"both"),
+      R("Savya Rasa",4.5,"both"),
+      R("Mainland China",4.4,"both"),
+    ],
+    snacks:[
+      R("Kayani Bakery",4.6,"veg"),
+      R("German Bakery",4.4,"veg"),
+      R("Garden Vada Pav",4.4,"veg"),
+      R("JJ Garden Vada Pav",4.5,"veg"),
+      R("Chitale Bandhu",4.5,"veg"),
+    ],
+    tea_coffee:[
+      R("Third Wave Coffee",4.4,"veg"),
+      R("Irani Cafe",4.5,"both"),
+      R("Pagdandi Books Chai Cafe",4.6,"veg"),
+      R("Blue Tokai Coffee",4.5,"veg"),
+      R("Starbucks KP",4.4,"veg"),
+    ]
+  },
+  "Pimpri-Chinchwad": {
+    breakfast:[
+      R("Anna Idli",4.5,"veg"),
+      R("Yewale Amruttulya",4.5,"veg"),
+      R("Cafe Peter Pimple Saudagar",4.2,"both"),
+      R("Wadeshwar PCMC",4.5,"veg"),
+      R("Durga Cafe",4.3,"veg"),
+    ],
+    lunch:[
+      R("Barbeque Nation Wakad",4.4,"both"),
+      R("Mainland China PCMC",4.3,"both"),
+      R("Vaishali Grand",4.3,"veg"),
+      R("Shree Krishna Veg",4.3,"veg"),
+      R("Rangla Punjab",4.2,"nonveg"),
+    ],
+    dinner:[
+      R("Incognito Wakad",4.4,"both"),
+      R("The Great Punjab",4.3,"nonveg"),
+      R("The Urban Foundry",4.4,"both"),
+      R("Agent Jack's",4.2,"both"),
+      R("Barbeque Nation PS",4.4,"both"),
+    ],
+    snacks:[
+      R("Patil Misal",4.4,"veg"),
+      R("Haldiram's",4.3,"veg"),
+      R("Rollfie",4.1,"both"),
+      R("Cremica Bakers",4.3,"veg"),
+      R("Cafe Peter",4.2,"both"),
+    ],
+    tea_coffee:[
+      R("Third Wave Coffee PCMC",4.4,"veg"),
+      R("Yewale Amruttulya Tea",4.5,"veg"),
+      R("Irani Cafe PCMC",4.4,"both"),
+      R("Tea Trails",4.2,"veg"),
+      R("Starbucks Hinjawadi",4.4,"veg"),
+    ]
+  },
+  "Kolhapur": {
+    breakfast:[
+      R("Phadtare Misal",4.6,"veg"),
+      R("Dehati",4.5,"veg"),
+      R("Parakh Misal",4.4,"veg"),
+      R("Bawada Misal",4.4,"veg"),
+      R("Hotel Opal (breakfast)",4.4,"both"),
+    ],
+    lunch:[
+      R("Hotel Opal",4.5,"nonveg"),
+      R("Dehati",4.5,"veg"),
+      R("Meghdoot",4.3,"veg"),
+      R("Hotel Gokul",4.2,"nonveg"),
+      R("Waman Guest House",4.2,"veg"),
+    ],
+    dinner:[
+      R("Niyaaz Kolhapur",4.4,"nonveg"),
+      R("Barbeque Nation Kolhapur",4.3,"both"),
+      R("The Yellow Chilli",4.3,"both"),
+      R("Little Italy",4.3,"veg"),
+      R("The Orchard",4.3,"both"),
+    ],
+    snacks:[
+      R("Phadtare Misal",4.6,"veg"),
+      R("Rajwada Bhel",4.3,"veg"),
+      R("Cream Corner",4.2,"veg"),
+      R("Shahupuri Bhel",4.2,"veg"),
+      R("Hot & Fresh",4.2,"veg"),
+    ],
+    tea_coffee:[
+      R("Kolhapur Coffee House",4.4,"veg"),
+      R("Wagh Bakri Lounge",4.3,"veg"),
+      R("Tea Trails",4.2,"veg"),
+      R("Cafe Bistro",4.2,"veg"),
+      R("Cafe Amigos",4.3,"veg"),
+    ]
+  },
+  "Solapur": {
+    breakfast:[
+      R("Shri Siddheshwar Bhavan",4.4,"veg"),
+      R("Dosa Plaza",4.2,"veg"),
+      R("Hotel Purohit",4.1,"veg"),
+      R("New Kamat",4.3,"veg"),
+      R("Hotel Priya",4.2,"veg"),
+    ],
+    lunch:[
+      R("Hotel Priyadarshini",4.3,"veg"),
+      R("Hotel Surya Executive",4.2,"both"),
+      R("Suruchi Dining",4.2,"veg"),
+      R("Shiv Sagar",4.2,"veg"),
+      R("Mezbaan Restaurant",4.2,"nonveg"),
+    ],
+    dinner:[
+      R("Niyaz Solapur",4.4,"nonveg"),
+      R("7 Spice",4.2,"both"),
+      R("Maharaja Restaurant",4.2,"both"),
+      R("The Address",4.2,"both"),
+      R("Cafe Udipi",4.2,"veg"),
+    ],
+    snacks:[
+      R("Yogeshwari Misal",4.3,"veg"),
+      R("Bun Maska Co.",4.2,"veg"),
+      R("Hangout",4.2,"veg"),
+      R("Rolls Mania",4.1,"both"),
+      R("Street Foods Hub",4.1,"both"),
+    ],
+    tea_coffee:[
+      R("Wagh Bakri Tea Lounge",4.3,"veg"),
+      R("Cafe Coffee Day",4.2,"veg"),
+      R("Tea Trails",4.2,"veg"),
+      R("Brew Hub",4.2,"veg"),
+      R("Cafe Mocha",4.2,"veg"),
+    ]
+  }
+};
+
+/* ====== ELEMENTS ====== */
+const q = s => document.querySelector(s), qa=s=>[...document.querySelectorAll(s)];
+const city1=q("#city1"), city2=q("#city2"), meal1=q("#meal1"), goBtn=q("#goBtn");
+const resultsGrid=q("#results"), emptyEl=q("#empty"), crumbs=q("#crumbs"), mealChips=q("#mealChips");
+const backBtn=q("#backBtn"), searchInput=q("#searchInput"), clearSearch=q("#clearSearch");
+const darkToggle=q("#darkToggle");
+/* Modals */
+const mapModal=q("#mapModal"), mapFrame=q("#mapFrame"), mapTitle=q("#mapTitle"), closeMap=q("#closeMap");
+const reviewsModal=q("#reviewsModal"), reviewsTitle=q("#reviewsTitle"), reviewsList=q("#reviewsList"), reviewForm=q("#reviewForm"), closeReviews=q("#closeReviews");
+const feedbackModal=q("#feedbackModal"), openFeedback=q("#openFeedback"), closeFeedback=q("#closeFeedback"), feedbackForm=q("#feedbackForm");
+const welcomeModal=q("#welcomeModal"), closeWelcome=q("#closeWelcome"), okWelcome=q("#okWelcome");
+const toast=q("#toast");
+
+/* ====== INIT DROPDOWNS ====== */
+CITIES.forEach(c=>{city1.add(new Option(c,c)); city2.add(new Option(c,c))});
+MEALS.forEach(([v,l])=>meal1.add(new Option(l,v)));
+
+/* ====== CHIPS ====== */
+function renderChips(active){
+  mealChips.innerHTML="";
+  MEALS.forEach(([v,l])=>{
+    const b=document.createElement("button");
+    b.className="chip"+(v===active?" active":"");
+    b.textContent=l; b.onclick=()=>navigate(city2.value,v);
+    mealChips.appendChild(b);
+  });
+}
+
+/* ====== NAV + RENDER ====== */
+function navigate(city,meal){
+  location.hash=`#/results?city=${encodeURIComponent(city)}&meal=${encodeURIComponent(meal)}&q=${encodeURIComponent(searchInput.value||"")}`;
+}
+function render(){
+  const home=q("#page-home"), page=q("#page-results");
+  const hash=location.hash;
+  if(!hash || !hash.startsWith("#/results")){home.style.display=""; page.style.display="none"; return;}
+  home.style.display="none"; page.style.display="";
+  const params=new URLSearchParams(hash.split("?")[1]||"");
+  const city=decodeURIComponent(params.get("city")||CITIES[0]);
+  const meal=decodeURIComponent(params.get("meal")||MEALS[0][0]);
+  const term=decodeURIComponent(params.get("q")||"");
+  city2.value=city; searchInput.value=term;
+  renderChips(meal);
+  crumbs.textContent=`Home ▸ ${city} ▸ ${humanMeal(meal)}`;
+  draw(city,meal,term);
+}
+
+/* ====== DRAW CARDS ====== */
+function draw(city, meal, term=""){
+  const list=(restaurantData[city]&&restaurantData[city][meal])?restaurantData[city][meal]:[];
+  const filtered=term?list.filter(i=>i.name.toLowerCase().includes(term.toLowerCase())):list;
+  resultsGrid.innerHTML=""; emptyEl.style.display=filtered.length?"none":"";
+  filtered.forEach(item=>{
+    const img=item.img || placeholderImg(item.name,city);
+    const mapQuery=encodeURIComponent(`${item.name}, ${city}`);
+    const badge=item.type==="veg"?"veg":item.type==="nonveg"?"nonveg":"";
+    const ratingClass=item.rating>=4 ? "rating-hi" : item.rating>=3 ? "rating-med" : "rating-low";
+    const favId=`${city}-${item.name}`.toLowerCase().replace(/\s+/g,'-');
+    const favFilled=localStorage.getItem("fav:"+favId)==="1";
+    const revKey=reviewKey(city,item.name);
+    const revCount=(JSON.parse(localStorage.getItem(revKey)||"[]")).length;
+
+    const card=document.createElement("div");
+    card.className="card";
+    card.innerHTML=`
+      <div style="position:relative">
+        <img class="thumb" src="${img}" loading="lazy" alt="${item.name}">
+        <button class="fav ${favFilled?'filled':''}" data-fav="${favId}" title="Add to favourites">❤</button>
+      </div>
+      <div class="content">
+        <h3 class="title">${item.name}</h3>
+        <div class="meta">
+          <span class="stars" style="--rating:${item.rating}"></span>
+          <span class="rating-chip ${ratingClass}">${item.rating.toFixed(1)}</span>
+          <span>• ${revCount} review${revCount===1?"":"s"}</span>
+        </div>
+        <div class="badges">
+          ${badge?`<span class="badge ${badge}">${badge==='veg'?'Veg':'Non-Veg'}</span>`:''}
+          <span class="badge">${humanMeal(meal)}</span>
+          <span class="badge">${city}</span>
+        </div>
+        <div class="actions">
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=${mapQuery}" target="_blank" rel="noopener">Open in Maps</a>
+          <a class="btn secondary" href="#" data-map="${mapQuery}">Preview Map</a>
+          <a class="btn ghost" href="#" data-rev='${JSON.stringify({city,name:item.name})}'>Reviews</a>
+        </div>
+      </div>
+    `;
+    resultsGrid.appendChild(card);
+  });
+
+  /* handlers: fav / map / reviews */
+  resultsGrid.querySelectorAll(".fav").forEach(b=>{
+    b.onclick=e=>{
+      const id=e.currentTarget.dataset.fav;
+      const now=localStorage.getItem("fav:"+id)==="1"?"0":"1";
+      localStorage.setItem("fav:"+id,now);
+      e.currentTarget.classList.toggle("filled",now==="1");
+      showToast(now==="1"?"Added to favourites":"Removed from favourites");
+    };
+  });
+  resultsGrid.querySelectorAll("[data-map]").forEach(b=>{
+    b.onclick=e=>{
+      e.preventDefault();
+      const q=decodeURIComponent(e.currentTarget.dataset.map);
+      openMapModal(q);
+    };
+  });
+  resultsGrid.querySelectorAll("[data-rev]").forEach(b=>{
+    b.onclick=e=>{
+      e.preventDefault();
+      const {city,name}=JSON.parse(e.currentTarget.dataset.rev);
+      openReviews(city,name);
+    };
+  });
+}
+
+/* ====== MAP MODAL ====== */
+function openMapModal(place){
+  mapTitle.textContent=place;
+  mapFrame.src=`https://www.google.com/maps?q=${encodeURIComponent(place)}&output=embed`;
+  mapModal.classList.add("open");
+}
+closeMap.onclick=()=>mapModal.classList.remove("open");
+
+/* ====== REVIEWS ====== */
+function reviewKey(city,name){return `reviews:${city}:${name}`;}
+function openReviews(city,name){
+  reviewsModal.dataset.city=city; reviewsModal.dataset.name=name;
+  reviewsTitle.textContent=`Reviews — ${name}`;
+  const list=JSON.parse(localStorage.getItem(reviewKey(city,name))||"[]");
+  renderReviews(list);
+  reviewsModal.classList.add("open");
+}
+function renderReviews(list){
+  if(!list.length){reviewsList.innerHTML="<em>No reviews yet. Be the first!</em>";return;}
+  reviewsList.innerHTML=list.map(r=>`
+    <div style="padding:10px 0;border-bottom:1px solid var(--border)">
+      <strong>${r.n}</strong> • <span class="stars" style="--rating:${r.r}"></span> <span>${r.r}.0</span>
+      <div style="color:var(--muted);font-size:14px;margin-top:4px">${r.t}</div>
+    </div>
+  `).join("");
+}
+closeReviews.onclick=()=>reviewsModal.classList.remove("open");
+reviewForm.onsubmit=e=>{
+  e.preventDefault();
+  const city=reviewsModal.dataset.city, name=reviewsModal.dataset.name;
+  const n=q("#revName").value.trim()||"Anonymous";
+  const r=parseInt(q("#revRating").value,10);
+  const t=q("#revText").value.trim();
+  if(!t) return;
+  const key=reviewKey(city,name);
+  const arr=JSON.parse(localStorage.getItem(key)||"[]");
+  arr.unshift({n,r,t,ts:Date.now()});
+  localStorage.setItem(key,JSON.stringify(arr));
+  q("#revText").value=""; q("#revName").value="";
+  renderReviews(arr);
+  showToast("Review submitted");
+  // Update count in card immediately (redraw)
+  render();
+};
+
+/* ====== FEEDBACK ====== */
+openFeedback.onclick=()=>feedbackModal.classList.add("open");
+closeFeedback.onclick=()=>feedbackModal.classList.remove("open");
+feedbackForm.onsubmit=e=>{
+  e.preventDefault();
+  const entry={
+    n:q("#fbName").value.trim(),
+    e:q("#fbEmail").value.trim(),
+    m:q("#fbMsg").value.trim(),
+    ts:Date.now()
+  };
+  const arr=JSON.parse(localStorage.getItem("siteFeedback")||"[]"); arr.unshift(entry);
+  localStorage.setItem("siteFeedback",JSON.stringify(arr));
+  feedbackModal.classList.remove("open");
+  showToast("Thanks for your feedback!");
+  feedbackForm.reset();
+};
+
+/* ====== WELCOME ====== */
+if(!localStorage.getItem("welcomed")){
+  welcomeModal.classList.add("open");
+}
+[closeWelcome,okWelcome].forEach(b=>b.onclick=()=>{
+  welcomeModal.classList.remove("open");
+  localStorage.setItem("welcomed","1");
+});
+
+/* ====== EVENTS ====== */
+goBtn.onclick=()=>navigate(city1.value,meal1.value);
+backBtn.onclick=()=>location.hash="";
+city2.onchange=()=>navigate(city2.value,getActiveMeal());
+searchInput.oninput=()=>navigate(city2.value,getActiveMeal());
+clearSearch.onclick=()=>{searchInput.value=""; navigate(city2.value,getActiveMeal());};
+window.addEventListener("hashchange",render);
+
+/* ====== HELPERS ====== */
+function getActiveMeal(){
+  const active=qa(".chip.active")[0];
+  if(!active) return MEALS[0][0];
+  const lbl=active.textContent.trim();
+  const found=MEALS.find(([,l])=>l===lbl);
+  return found?found[0]:MEALS[0][0];
+}
+function showToast(msg){
+  toast.textContent=msg; toast.classList.add("show");
+  setTimeout(()=>toast.classList.remove("show"),2200);
+}
+
+/* ====== INIT ====== */
+(function init(){
+  city1.value=CITIES[0]; meal1.value=MEALS[0][0];
+  renderChips(MEALS[0][0]); render();
+})();
+</script>
+</body>
+</html>
+
+
+
+
