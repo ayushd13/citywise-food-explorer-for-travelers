@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="1.css">
+  <title>Citywise Food Explorer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <link rel="stylesheet" href="map.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1><span class="logo-icon">🍽</span> Citywise Food Explorer <span class="logo-icon">🍽</span></h1>
+    <p class="tagline">Discover top-rated local food gems by city</p>
+  </header>
+
+  <!-- Selection Box -->
+  <div class="selection-container">
+    <h2>Find the Best Food Options in Your City!</h2>
+
+    <label for="city">Select City:</label>
+    <select id="city">
+      <option value="sangli">Sangli</option>
+      <option value="pune">Pune</option>
+      <option value="solapur">Solapur</option>
+      <option value="kolhapur">Kolhapur</option>
+      <option value="mumbai">Mumbai</option>
+      <option value="nagpur">Nagpur</option>
+      <option value="nashik">Nashik</option>
+      <option value="nanded">Nanded</option>
+      <option value="satara">Satara</option>
+      <option value="latur">Latur</option>
+    </select>
+
+    <label for="category">Select category:</label>
+    <select id="category">
+      <option value="breakfast">Breakfast</option>
+      <option value="lunch">Lunch</option>
+      <option value="dinner">Dinner</option>
+      <option value="snacks">Snacks</option>
+      <option value="tea-coffee">Tea & Coffee</option>
+    </select>
+
+    <button onclick="showRestaurants()">Show Restaurants</button>
+  </div>
+
+  <!-- Display Section -->
+  <div class="restaurant-grid" id="restaurantGrid"></div>
+<script src="map.js"></script>
+</body>
+</html>
