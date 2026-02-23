@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expense Tracker Pro+</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+
+<!-- Firebase CDN (NO MODULE VERSION) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<style>
+:root{
+  --bg:#000;
+  --card:#111;
+  --text:#fff;
+  --input:#1a1a1a;
+  --border:#333;
+  --gradient:linear-gradient(135deg,#6a11cb,#2575fc);
+}
+body{background:var(--bg);color:var(--text);font-family:Segoe UI;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:15px;margin-bottom:15px;}
+input,select{background:var(--input)!important;color:#fff!important;border:1px solid var(--border)!important;}
+.btn-primary{background:var(--gradient);border:none;}
+.expense{display:flex;justify-content:space-between;border-bottom:1px solid #333;padding:8px 0;}
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div class="container mt-5" id="authBox" style="max-width:400px;">
+  <div class="card">
+    <h4 class="text-center mb-3">Expense Tracker</h4>
+    <input type="email" id="email" class="form-control mb-2" placeholder="Email">
+    <input type="password" id="password" class="form-control mb-3" placeholder="Password">
+    <button class="btn btn-primary w-100 mb-2" onclick="signup()">Sign Up</button>
+    <button class="btn btn-success w-100 mb-2" onclick="login()">Login</button>
+    <button class="btn btn-light w-100" onclick="googleLogin()">Login with Google</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="container d-none" id="appBox" style="max-width:420px;">
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <h5><i class="fa-solid fa-wallet"></i> Expense Tracker</h5>
+    <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="card">
+    <input type="number" id="cashInput" class="form-control mb-2" placeholder="Cash balance">
+    <input type="number" id="onlineInput" class="form-control mb-2" placeholder="Online balance">
+    <button class="btn btn-primary w-100" onclick="setBalances()">Set Balances</button>
+    <hr>
+    Cash: ₹<span id="cashRemain">0</span><br>
+    Online: ₹<span id="onlineRemain">0</span><br>
+    Spent: ₹<span id="spent">0</span>
+  </div>
+
+  <div class="card">
+    <input id="amount" class="form-control mb-2" placeholder="Amount">
+    <select id="paymentType" class="form-select mb-2">
+      <option value="cash">Cash</option>
+      <option value="online">Online</option>
+    </select>
+    <input id="categoryInput" class="form-control mb-2" placeholder="Category">
+    <button class="btn btn-success w-100" onclick="addExpense()">Add Expense</button>
+  </div>
+
+  <div class="card">
+    <h6>History</h6>
+    <div id="list"></div>
+  </div>
+
+  <div class="card"><canvas id="pieChart"></canvas></div>
+  <button class="btn btn-dark w-100 mb-2" onclick="exportPDF()">Export PDF</button>
+</div>
+
+<script>
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyAZ8_62VitBVrPsVNOijBnxJQ1VUt8QOk8",
+  authDomain: "expensetracker-afbf7.firebaseapp.com",
+  projectId: "expensetracker-afbf7",
+  storageBucket: "expensetracker-afbf7.firebasestorage.app",
+  messagingSenderId: "674803991158",
+  appId: "1:674803991158:web:bf2fb8a701be09f91bd557"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+/* AUTH FUNCTIONS */
+function signup(){
+  auth.createUserWithEmailAndPassword(email.value,password.value)
+  .catch(e=>alert(e.message));
+}
+function login(){
+  auth.signInWithEmailAndPassword(email.value,password.value)
+  .catch(e=>alert(e.message));
+}
+function googleLogin(){
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider)
+  .catch(e=>alert(e.message));
+}
+function logout(){
+  auth.signOut();
+}
+
+let currentUser=null, store={}, pieChart;
+
+auth.onAuthStateChanged(user=>{
+  if(user){
+    currentUser=user.uid;
+    authBox.classList.add("d-none");
+    appBox.classList.remove("d-none");
+    loadUserData();
+  }else{
+    authBox.classList.remove("d-none");
+    appBox.classList.add("d-none");
+  }
+});
+
+/* EXPENSE LOGIC */
+function save(){
+  localStorage.setItem("tracker_"+currentUser,JSON.stringify(store));
+}
+function loadUserData(){
+  store=JSON.parse(localStorage.getItem("tracker_"+currentUser))||{cash:0,online:0,expenses:[]};
+  update();
+}
+function setBalances(){
+  store.cash=Number(cashInput.value);
+  store.online=Number(onlineInput.value);
+  save();update();
+}
+function addExpense(){
+  const amt=Number(amount.value);
+  const pay=paymentType.value;
+  const cat=categoryInput.value;
+  if(!amt||!cat)return alert("Fill all fields");
+  if(store[pay]<amt)return alert("Not enough balance");
+  store[pay]-=amt;
+  store.expenses.push({amt,cat,date:new Date().toLocaleDateString()});
+  amount.value="";categoryInput.value="";
+  save();update();
+}
+function update(){
+  cashRemain.innerText=store.cash;
+  onlineRemain.innerText=store.online;
+  spent.innerText=store.expenses.reduce((s,e)=>s+e.amt,0);
+  renderList();renderChart();
+}
+function renderList(){
+  list.innerHTML="";
+  store.expenses.forEach(e=>{
+    list.innerHTML+=`<div class="expense"><div>${e.cat}<br><small>${e.date}</small></div><div>₹${e.amt}</div></div>`;
+  });
+}
+function renderChart(){
+  const map={};
+  store.expenses.forEach(e=>map[e.cat]=(map[e.cat]||0)+e.amt);
+  if(pieChart)pieChart.destroy();
+  pieChart=new Chart(document.getElementById("pieChart"),{
+    type:"doughnut",
+    data:{labels:Object.keys(map),datasets:[{data:Object.values(map)}]}
+  });
+}
+function exportPDF(){
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF();
+  doc.text("Expense Report",14,15);
+  doc.autoTable({
+    startY:25,
+    head:[["Date","Category","Amount"]],
+    body:store.expenses.map(e=>[e.date,e.cat,"₹"+e.amt])
+  });
+  doc.save("Expense.pdf");
+}
+</script>
+
+</body>
+</html>
