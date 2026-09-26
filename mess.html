@@ -1,0 +1,2834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sharma Mess Management</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    background:#07080a;
+    color:#f5f5f5;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+button,input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.topbar{
+    height:72px;
+    padding:0 30px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#090a0d;
+    border-bottom:1px solid #292d37;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logoIcon{
+    width:43px;
+    height:43px;
+    display:grid;
+    place-items:center;
+    border-radius:12px;
+    background:linear-gradient(135deg,#ef4444,#7f1d1d);
+    font-size:21px;
+}
+
+.logo h1{
+    margin:0;
+    font-size:20px;
+}
+
+.logo span{
+    color:#888f9d;
+    font-size:12px;
+}
+
+.container{
+    width:94%;
+    max-width:1550px;
+    margin:30px auto;
+}
+
+.pageTitle{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.pageTitle h2{
+    margin:0;
+    font-size:28px;
+}
+
+.pageTitle p{
+    color:#858b98;
+    margin-top:6px;
+}
+
+.primary{
+    background:linear-gradient(135deg,#ef4444,#991b1b);
+    color:#fff;
+    border:0;
+    padding:11px 17px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.secondary{
+    background:#191b21;
+    color:white;
+    border:1px solid #30343e;
+    padding:10px 15px;
+    border-radius:8px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:14px;
+    margin-bottom:24px;
+}
+
+.stat{
+    background:linear-gradient(145deg,#13151a,#0e0f12);
+    border:1px solid #292d37;
+    border-radius:15px;
+    padding:18px;
+}
+
+.statLabel{
+    color:#858b98;
+    font-size:12px;
+}
+
+.statValue{
+    margin-top:10px;
+    font-size:25px;
+    font-weight:800;
+}
+
+.green{color:#4ade80}
+.red{color:#f87171}
+.yellow{color:#fbbf24}
+.blue{color:#60a5fa}
+
+.grid2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+    margin-bottom:24px;
+}
+
+.panel{
+    background:linear-gradient(145deg,#111318,#0d0e11);
+    border:1px solid #292d37;
+    border-radius:16px;
+    padding:20px;
+}
+
+.panelHeader{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:15px;
+}
+
+.panelHeader h3{
+    margin:0;
+}
+
+.muted{
+    color:#858b98;
+    font-size:12px;
+}
+
+.unpaidList{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.unpaidItem{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:11px;
+    background:#17191f;
+    border:1px solid #252832;
+    border-radius:9px;
+}
+
+.studentMini{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:#321418;
+    color:#f87171;
+    font-weight:bold;
+}
+
+.studentMini strong{
+    display:block;
+    font-size:13px;
+}
+
+.studentMini small{
+    color:#858b98;
+}
+
+.reminderBtn{
+    background:#0c2015;
+    border:1px solid #14532d;
+    color:#4ade80;
+    padding:7px 10px;
+    border-radius:7px;
+    font-size:11px;
+}
+
+.tablePanel{
+    padding:0;
+    overflow:hidden;
+}
+
+.tableHeader{
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    border-bottom:1px solid #292d37;
+}
+
+.tableHeader h3{
+    margin:0 0 5px;
+}
+
+.search{
+    width:300px;
+    background:#090a0d;
+    border:1px solid #292d37;
+    color:white;
+    padding:10px 13px;
+    border-radius:9px;
+    outline:none;
+}
+
+.tableWrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1450px;
+    border-collapse:collapse;
+}
+
+th{
+    text-align:left;
+    padding:13px 15px;
+    background:#0c0d10;
+    color:#858b98;
+    font-size:10px;
+    text-transform:uppercase;
+    white-space:nowrap;
+}
+
+td{
+    padding:14px 15px;
+    border-top:1px solid #20232b;
+    font-size:12px;
+    white-space:nowrap;
+}
+
+tr:hover td{
+    background:#15171c;
+}
+
+.studentId{
+    color:#f87171;
+    font-weight:bold;
+}
+
+.studentName{
+    font-weight:bold;
+}
+
+.studentName small{
+    display:block;
+    color:#858b98;
+    margin-top:3px;
+    font-weight:normal;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 8px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.paid{
+    color:#4ade80;
+    background:#092014;
+    border:1px solid #14532d;
+}
+
+.unpaid{
+    color:#f87171;
+    background:#241012;
+    border:1px solid #7f1d1d;
+}
+
+.complete{
+    color:#fbbf24;
+    background:#21170a;
+    border:1px solid #854d0e;
+}
+
+.remaining{
+    color:#60a5fa;
+    font-weight:bold;
+}
+
+.leaveText{
+    color:#fbbf24;
+}
+
+.actions{
+    display:flex;
+    gap:5px;
+}
+
+.actionBtn{
+    background:#17191f;
+    border:1px solid #30343e;
+    color:#ddd;
+    padding:6px 8px;
+    border-radius:7px;
+    font-size:11px;
+}
+
+.payBtn{
+    color:#4ade80;
+    border-color:#14532d;
+}
+
+.deleteBtn{
+    color:#f87171;
+}
+
+.empty{
+    text-align:center;
+    color:#858b98;
+    padding:20px;
+}
+
+/* MODAL */
+
+.modalOverlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(8px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:20px;
+}
+
+.modalOverlay.show{
+    display:flex;
+}
+
+.modal{
+    width:min(760px,100%);
+    max-height:94vh;
+    overflow-y:auto;
+    background:#111318;
+    border:1px solid #30343e;
+    border-radius:17px;
+    box-shadow:0 30px 100px rgba(0,0,0,.7);
+}
+
+.modalHeader{
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid #292d37;
+}
+
+.modalHeader h3{
+    margin:0 0 5px;
+}
+
+.close{
+    border:0;
+    background:none;
+    color:#999;
+    font-size:27px;
+}
+
+.form{
+    padding:20px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.formGroup{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+label{
+    color:#a6abb6;
+    font-size:11px;
+}
+
+input{
+    width:100%;
+    background:#090a0d;
+    border:1px solid #2a2d36;
+    color:white;
+    border-radius:8px;
+    padding:10px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#ef4444;
+}
+
+.billingBox{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    padding:14px;
+    background:#0c1118;
+    border:1px solid #263448;
+    border-radius:10px;
+}
+
+.billingBox span{
+    display:block;
+    color:#858b98;
+    font-size:10px;
+    margin-bottom:5px;
+}
+
+.billingBox strong{
+    font-size:13px;
+}
+
+.leaveSection{
+    padding:15px;
+    background:#0c0e12;
+    border:1px solid #292d37;
+    border-radius:10px;
+}
+
+.leaveHeader{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.leaveForm{
+    display:grid;
+    grid-template-columns:1fr 1fr auto;
+    gap:8px;
+}
+
+.smallBtn{
+    background:#1b1e25;
+    color:white;
+    border:1px solid #30343e;
+    border-radius:7px;
+    padding:9px 12px;
+}
+
+.leaveItem{
+    margin-top:8px;
+    padding:9px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#17191f;
+    border-radius:7px;
+    font-size:12px;
+}
+
+.removeLeave{
+    background:none;
+    border:0;
+    color:#f87171;
+}
+
+.modalFooter{
+    grid-column:1/-1;
+    padding-top:18px;
+    border-top:1px solid #292d37;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+}
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#181a20;
+    border:1px solid #363943;
+    color:white;
+    padding:13px 18px;
+    border-radius:10px;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.3s;
+    z-index:200;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+@media(max-width:1200px){
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:800px){
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .container{
+        width:96%;
+    }
+
+    .stats,
+    .grid2{
+        grid-template-columns:1fr;
+    }
+
+    .form{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .billingBox{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .leaveForm{
+        grid-template-columns:1fr;
+    }
+
+    .tableHeader{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .search{
+        width:100%;
+    }
+
+    .pageTitle{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="logo">
+
+        <div class="logoIcon">🍛</div>
+
+        <div>
+            <h1>Sharma Mess</h1>
+            <span>Mess Management System</span>
+        </div>
+
+    </div>
+
+    <button class="primary" onclick="openAddModal()">
+        + Add Student
+    </button>
+
+</header>
+
+
+<main class="container">
+
+    <div class="pageTitle">
+
+        <div>
+            <h2>Dashboard</h2>
+            <p>
+                Manage students, billing cycles, leave and payments.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+        <div class="stat">
+            <div class="statLabel">TOTAL STUDENTS</div>
+            <div class="statValue" id="totalStudents">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="statLabel">PAID</div>
+            <div class="statValue green" id="paidStudents">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="statLabel">UNPAID</div>
+            <div class="statValue red" id="unpaidStudents">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="statLabel">COLLECTED</div>
+            <div class="statValue green" id="collectedAmount">₹0</div>
+        </div>
+
+        <div class="stat">
+            <div class="statLabel">FEES DUE</div>
+            <div class="statValue yellow" id="dueAmount">₹0</div>
+        </div>
+
+        <div class="stat">
+            <div class="statLabel">MONTH COMPLETE</div>
+            <div class="statValue blue" id="completedMonths">0</div>
+        </div>
+
+    </section>
+
+
+    <!-- UNPAID + BILLING -->
+
+    <section class="grid2">
+
+        <div class="panel">
+
+            <div class="panelHeader">
+                <h3>🔴 Unpaid Fees</h3>
+                <span class="muted" id="unpaidCount">0</span>
+            </div>
+
+            <div class="unpaidList" id="unpaidList"></div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <div class="panelHeader">
+                <h3>📅 Upcoming Billing</h3>
+            </div>
+
+            <div id="billingStatus"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- STUDENTS -->
+
+    <section class="panel tablePanel">
+
+        <div class="tableHeader">
+
+            <div>
+                <h3>All Students</h3>
+                <span class="muted">
+                    Every student has an independent billing cycle.
+                </span>
+            </div>
+
+            <input
+                class="search"
+                id="search"
+                placeholder="Search name, ID or mobile..."
+                oninput="renderTable()"
+            >
+
+        </div>
+
+
+        <div class="tableWrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Student</th>
+                        <th>Join Date</th>
+                        <th>Month Complete</th>
+                        <th>Days Remaining</th>
+                        <th>Home Leave</th>
+                        <th>Final Fee</th>
+                        <th>Payment</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="studentTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- STUDENT MODAL -->
+
+<div class="modalOverlay" id="studentModal">
+
+    <div class="modal">
+
+        <div class="modalHeader">
+
+            <div>
+                <h3 id="modalTitle">Add Student</h3>
+                <span class="muted">
+                    Student and billing information
+                </span>
+            </div>
+
+            <button class="close" onclick="closeModal()">×</button>
+
+        </div>
+
+
+        <form class="form" onsubmit="saveStudent(event)">
+
+            <input type="hidden" id="editingId">
+
+
+            <div class="formGroup">
+
+                <label>Student ID</label>
+
+                <input
+                    id="studentId"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="formGroup">
+
+                <label>Student Name *</label>
+
+                <input
+                    id="studentName"
+                    required
+                    placeholder="Enter student name"
+                >
+
+            </div>
+
+
+            <div class="formGroup">
+
+                <label>Mobile Number *</label>
+
+                <input
+                    id="mobile"
+                    type="tel"
+                    required
+                    placeholder="9876543210"
+                >
+
+            </div>
+
+
+            <div class="formGroup">
+
+                <label>Joining Date *</label>
+
+                <input
+                    id="joiningDate"
+                    type="date"
+                    required
+                    onchange="updatePreview()"
+                >
+
+            </div>
+
+
+            <!-- AUTOMATIC BILLING -->
+
+            <div class="formGroup full">
+
+                <label>Automatic Billing Cycle</label>
+
+                <div class="billingBox">
+
+                    <div>
+                        <span>JOINED</span>
+                        <strong id="previewJoined">-</strong>
+                    </div>
+
+                    <div>
+                        <span>MONTH COMPLETES</span>
+                        <strong id="previewEnd">-</strong>
+                    </div>
+
+                    <div>
+                        <span>DAYS LEFT</span>
+                        <strong id="previewRemaining">-</strong>
+                    </div>
+
+                    <div>
+                        <span>FINAL FEE</span>
+                        <strong id="previewFee">₹2,700</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LEAVE -->
+
+            <div class="formGroup full">
+
+                <div class="leaveSection">
+
+                    <div class="leaveHeader">
+
+                        <strong>🏠 Home / Leave Records</strong>
+
+                        <span
+                            class="muted"
+                            id="totalLeaveDays"
+                        >
+                            0 days
+                        </span>
+
+                    </div>
+
+
+                    <div class="leaveForm">
+
+                        <input
+                            type="date"
+                            id="leaveFrom"
+                        >
+
+                        <input
+                            type="date"
+                            id="leaveTo"
+                        >
+
+                        <button
+                            type="button"
+                            class="smallBtn"
+                            onclick="addLeave()"
+                        >
+                            + Add Leave
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="muted"
+                        style="margin-top:8px"
+                    >
+                        Leave is counted from going-home date
+                        through return date.
+                    </div>
+
+
+                    <div id="leaveList"></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="formGroup">
+
+                <label>Monthly Fee</label>
+
+                <input
+                    value="₹2,700"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="formGroup">
+
+                <label>Leave Deduction</label>
+
+                <input
+                    id="previewDeduction"
+                    value="₹0"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="formGroup full">
+
+                <label>
+
+                    <input
+                        type="checkbox"
+                        id="paidCheck"
+                        style="width:auto;margin-right:7px"
+                    >
+
+                    Payment already received
+
+                </label>
+
+            </div>
+
+
+            <div class="modalFooter">
+
+                <button
+                    type="button"
+                    class="secondary"
+                    onclick="closeModal()"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary"
+                >
+                    Save Student
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+const MONTHLY_FEE = 2700;
+
+/*
+   ₹2700 / 30 days = ₹90 per day.
+*/
+const DAILY_RATE = 90;
+
+
+/* =========================================================
+   SAMPLE STUDENTS
+========================================================= */
+
+const sampleStudents = [
+
+    {
+        id:"SM001",
+        name:"Aarav Sharma",
+        mobile:"919876543210",
+        joiningDate:"2026-09-01",
+
+        leaves:[
+            {
+                from:"2026-09-10",
+                to:"2026-09-12"
+            }
+        ],
+
+        paid:true,
+        paymentDate:"2026-09-26T18:30:00",
+        paymentAmount:2520
+    },
+
+    {
+        id:"SM002",
+        name:"Rohan Patil",
+        mobile:"919812345678",
+        joiningDate:"2026-09-05",
+
+        leaves:[],
+
+        paid:false,
+        paymentDate:null,
+        paymentAmount:0
+    },
+
+    {
+        id:"SM003",
+        name:"Aditya Kulkarni",
+        mobile:"919998877665",
+        joiningDate:"2026-09-10",
+
+        leaves:[
+            {
+                from:"2026-09-15",
+                to:"2026-09-19"
+            }
+        ],
+
+        paid:true,
+        paymentDate:"2026-09-26T12:15:00",
+        paymentAmount:2250
+    },
+
+    {
+        id:"SM004",
+        name:"Vivek Joshi",
+        mobile:"919887766554",
+        joiningDate:"2026-09-15",
+
+        leaves:[],
+
+        paid:false,
+        paymentDate:null,
+        paymentAmount:0
+    },
+
+    {
+        id:"SM005",
+        name:"Kunal Deshmukh",
+        mobile:"919776655443",
+        joiningDate:"2026-09-20",
+
+        leaves:[
+            {
+                from:"2026-09-23",
+                to:"2026-09-24"
+            }
+        ],
+
+        paid:false,
+        paymentDate:null,
+        paymentAmount:0
+    }
+
+];
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+let students =
+    JSON.parse(
+        localStorage.getItem("sharmaMessStudentsV3")
+    );
+
+if(!Array.isArray(students)){
+    students = sampleStudents;
+    saveData();
+}
+
+
+/* =========================================================
+   SAVE
+========================================================= */
+
+function saveData(){
+
+    localStorage.setItem(
+        "sharmaMessStudentsV3",
+        JSON.stringify(students)
+    );
+
+}
+
+
+/* =========================================================
+   DATE FUNCTIONS
+========================================================= */
+
+function dateOnly(value){
+
+    const d = new Date(value);
+
+    d.setHours(0,0,0,0);
+
+    return d;
+
+}
+
+
+/*
+   IMPORTANT:
+
+   Joining: 10 Sep
+   Month completes: 09 Oct
+
+   Joining: 25 Sep
+   Month completes: 24 Oct
+*/
+
+function getMonthEnd(joinDate){
+
+    const start = dateOnly(joinDate);
+
+    const end = new Date(start);
+
+    end.setMonth(
+        end.getMonth() + 1
+    );
+
+    end.setDate(
+        end.getDate() - 1
+    );
+
+    return end;
+
+}
+
+
+function getDaysRemaining(joinDate){
+
+    const today =
+        dateOnly(new Date());
+
+    const end =
+        getMonthEnd(joinDate);
+
+    const difference =
+        end.getTime() -
+        today.getTime();
+
+    return Math.max(
+        0,
+        Math.ceil(
+            difference /
+            (1000*60*60*24)
+        )
+    );
+
+}
+
+
+function isMonthComplete(joinDate){
+
+    return dateOnly(new Date()) >=
+        getMonthEnd(joinDate);
+
+}
+
+
+function daysBetween(start,end){
+
+    const a = dateOnly(start);
+    const b = dateOnly(end);
+
+    const difference =
+        b.getTime() -
+        a.getTime();
+
+    return Math.floor(
+        difference /
+        (1000*60*60*24)
+    ) + 1;
+
+}
+
+
+/* =========================================================
+   LEAVE
+========================================================= */
+
+function calculateLeaveDays(student){
+
+    if(!student.leaves){
+        return 0;
+    }
+
+    const cycleStart =
+        dateOnly(student.joiningDate);
+
+    const cycleEnd =
+        getMonthEnd(student.joiningDate);
+
+    let total = 0;
+
+
+    student.leaves.forEach(leave => {
+
+        if(!leave.from || !leave.to){
+            return;
+        }
+
+        let from =
+            dateOnly(leave.from);
+
+        let to =
+            dateOnly(leave.to);
+
+
+        /*
+           Ignore leave outside
+           current billing cycle.
+        */
+
+        if(
+            to < cycleStart ||
+            from > cycleEnd
+        ){
+            return;
+        }
+
+
+        if(from < cycleStart){
+            from = cycleStart;
+        }
+
+        if(to > cycleEnd){
+            to = cycleEnd;
+        }
+
+
+        total +=
+            daysBetween(from,to);
+
+    });
+
+
+    return total;
+
+}
+
+
+/* =========================================================
+   FEE
+========================================================= */
+
+function calculateFee(student){
+
+    const leaveDays =
+        calculateLeaveDays(student);
+
+    const deduction =
+        leaveDays * DAILY_RATE;
+
+    return Math.max(
+        0,
+        MONTHLY_FEE - deduction
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT
+========================================================= */
+
+function money(amount){
+
+    return "₹" +
+        Number(amount || 0)
+        .toLocaleString("en-IN");
+
+}
+
+
+function formatDate(value){
+
+    if(!value){
+        return "-";
+    }
+
+    return new Date(value)
+        .toLocaleDateString(
+            "en-IN",
+            {
+                day:"2-digit",
+                month:"short",
+                year:"numeric"
+            }
+        );
+
+}
+
+
+function formatDateTime(value){
+
+    if(!value){
+        return "-";
+    }
+
+    return new Date(value)
+        .toLocaleString(
+            "en-IN",
+            {
+                day:"2-digit",
+                month:"short",
+                year:"numeric",
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function updateDashboard(){
+
+    const paid =
+        students.filter(
+            s => s.paid
+        );
+
+    const unpaid =
+        students.filter(
+            s => !s.paid
+        );
+
+
+    const collected =
+        paid.reduce(
+            (total,s) =>
+                total +
+                Number(
+                    s.paymentAmount ||
+                    calculateFee(s)
+                ),
+            0
+        );
+
+
+    const due =
+        unpaid.reduce(
+            (total,s) =>
+                total +
+                calculateFee(s),
+            0
+        );
+
+
+    const completed =
+        students.filter(
+            s =>
+                isMonthComplete(
+                    s.joiningDate
+                )
+        ).length;
+
+
+    document.getElementById(
+        "totalStudents"
+    ).innerText = students.length;
+
+
+    document.getElementById(
+        "paidStudents"
+    ).innerText = paid.length;
+
+
+    document.getElementById(
+        "unpaidStudents"
+    ).innerText = unpaid.length;
+
+
+    document.getElementById(
+        "collectedAmount"
+    ).innerText =
+        money(collected);
+
+
+    document.getElementById(
+        "dueAmount"
+    ).innerText =
+        money(due);
+
+
+    document.getElementById(
+        "completedMonths"
+    ).innerText =
+        completed;
+
+
+    renderUnpaid();
+
+    renderBillingStatus();
+
+}
+
+
+/* =========================================================
+   UNPAID
+========================================================= */
+
+function renderUnpaid(){
+
+    const box =
+        document.getElementById(
+            "unpaidList"
+        );
+
+
+    const unpaid =
+        students.filter(
+            s => !s.paid
+        );
+
+
+    document.getElementById(
+        "unpaidCount"
+    ).innerText =
+        unpaid.length +
+        " students";
+
+
+    if(!unpaid.length){
+
+        box.innerHTML = `
+            <div class="empty">
+                ✓ No unpaid students.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+        unpaid.map(s => `
+
+            <div class="unpaidItem">
+
+                <div class="studentMini">
+
+                    <div class="avatar">
+                        ${escapeHtml(
+                            s.name.charAt(0)
+                        )}
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            ${escapeHtml(s.name)}
+                        </strong>
+
+                        <small>
+                            ${s.id} •
+                            ${money(
+                                calculateFee(s)
+                            )}
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="reminderBtn"
+                    onclick="sendWhatsApp('${s.id}')"
+                >
+                    WhatsApp
+                </button>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+/* =========================================================
+   BILLING STATUS
+========================================================= */
+
+function renderBillingStatus(){
+
+    const box =
+        document.getElementById(
+            "billingStatus"
+        );
+
+
+    const sorted =
+        [...students]
+        .sort(
+            (a,b) =>
+                getDaysRemaining(
+                    a.joiningDate
+                ) -
+                getDaysRemaining(
+                    b.joiningDate
+                )
+        )
+        .slice(0,6);
+
+
+    if(!sorted.length){
+
+        box.innerHTML =
+            `<div class="empty">
+                No students.
+            </div>`;
+
+        return;
+
+    }
+
+
+    box.innerHTML =
+        sorted.map(s => {
+
+            const complete =
+                isMonthComplete(
+                    s.joiningDate
+                );
+
+            const days =
+                getDaysRemaining(
+                    s.joiningDate
+                );
+
+
+            return `
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    padding:11px;
+                    background:#17191f;
+                    border:1px solid #252832;
+                    border-radius:9px;
+                    margin-bottom:8px;
+                ">
+
+                    <div>
+
+                        <strong>
+                            ${escapeHtml(s.name)}
+                        </strong>
+
+                        <div class="muted">
+                            Month ends:
+                            ${formatDate(
+                                getMonthEnd(
+                                    s.joiningDate
+                                )
+                            )}
+                        </div>
+
+                    </div>
+
+                    ${
+                        complete
+
+                        ?
+
+                        `<span class="badge complete">
+                            MONTH COMPLETE
+                        </span>`
+
+                        :
+
+                        `<span class="remaining">
+                            ${days} days
+                        </span>`
+                    }
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+function renderTable(){
+
+    const search =
+        document.getElementById(
+            "search"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    const filtered =
+        students.filter(s =>
+
+            s.name
+                .toLowerCase()
+                .includes(search)
+
+            ||
+
+            s.id
+                .toLowerCase()
+                .includes(search)
+
+            ||
+
+            s.mobile
+                .includes(search)
+
+        );
+
+
+    const table =
+        document.getElementById(
+            "studentTable"
+        );
+
+
+    if(!filtered.length){
+
+        table.innerHTML = `
+            <tr>
+                <td
+                    colspan="9"
+                    class="empty"
+                >
+                    No students found.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    table.innerHTML =
+        filtered.map(s => {
+
+            const leaveDays =
+                calculateLeaveDays(s);
+
+            const fee =
+                calculateFee(s);
+
+            const days =
+                getDaysRemaining(
+                    s.joiningDate
+                );
+
+            const complete =
+                isMonthComplete(
+                    s.joiningDate
+                );
+
+
+            return `
+
+                <tr>
+
+                    <td class="studentId">
+                        ${s.id}
+                    </td>
+
+
+                    <td>
+
+                        <div class="studentName">
+
+                            ${escapeHtml(s.name)}
+
+                            <small>
+                                +${s.mobile.replace(/^91/,"")}
+                            </small>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+                        ${formatDate(
+                            s.joiningDate
+                        )}
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+                            ${formatDate(
+                                getMonthEnd(
+                                    s.joiningDate
+                                )
+                            )}
+                        </strong>
+
+                        <br>
+
+                        ${
+                            complete
+
+                            ?
+
+                            `<span class="badge complete">
+                                COMPLETE
+                            </span>`
+
+                            :
+
+                            `<span class="muted">
+                                Active
+                            </span>`
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            complete
+
+                            ?
+
+                            `<span class="badge complete">
+                                FEE READY
+                            </span>`
+
+                            :
+
+                            `<span class="remaining">
+                                ${days} days left
+                            </span>`
+                        }
+
+                    </td>
+
+
+                    <td class="leaveText">
+
+                        🏠 ${leaveDays} day(s)
+
+                        <br>
+
+                        <button
+                            class="actionBtn"
+                            onclick="editStudent('${s.id}')"
+                        >
+                            View Leave
+                        </button>
+
+                    </td>
+
+
+                    <td>
+
+                        <strong>
+                            ${money(fee)}
+                        </strong>
+
+                        ${
+                            leaveDays > 0
+
+                            ?
+
+                            `<small style="
+                                display:block;
+                                color:#fbbf24;
+                                margin-top:4px
+                            ">
+                                -${money(
+                                    leaveDays * DAILY_RATE
+                                )}
+                            </small>`
+
+                            :
+
+                            ""
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            s.paid
+
+                            ?
+
+                            `
+
+                            <span class="badge paid">
+                                ✓ PAID
+                            </span>
+
+                            <small style="
+                                display:block;
+                                color:#858b98;
+                                margin-top:5px
+                            ">
+                                ${formatDateTime(
+                                    s.paymentDate
+                                )}
+                            </small>
+
+                            <button
+                                class="actionBtn"
+                                onclick="undoPayment('${s.id}')"
+                            >
+                                Undo
+                            </button>
+
+                            `
+
+                            :
+
+                            `
+
+                            <span class="badge unpaid">
+                                UNPAID
+                            </span>
+
+                            <br>
+
+                            <button
+                                class="actionBtn payBtn"
+                                onclick="markPaid('${s.id}')"
+                            >
+                                Mark Paid
+                            </button>
+
+                            `
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button
+                                class="actionBtn"
+                                onclick="editStudent('${s.id}')"
+                            >
+                                Edit
+                            </button>
+
+                            <button
+                                class="actionBtn"
+                                onclick="sendWhatsApp('${s.id}')"
+                            >
+                                WA
+                            </button>
+
+                            <button
+                                class="actionBtn deleteBtn"
+                                onclick="deleteStudent('${s.id}')"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   OPEN ADD
+========================================================= */
+
+function openAddModal(){
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText = "Add Student";
+
+
+    document.getElementById(
+        "editingId"
+    ).value = "";
+
+
+    document.getElementById(
+        "studentId"
+    ).value = generateId();
+
+
+    document.getElementById(
+        "studentName"
+    ).value = "";
+
+
+    document.getElementById(
+        "mobile"
+    ).value = "";
+
+
+    const today =
+        new Date()
+        .toISOString()
+        .split("T")[0];
+
+
+    document.getElementById(
+        "joiningDate"
+    ).value = today;
+
+
+    document.getElementById(
+        "paidCheck"
+    ).checked = false;
+
+
+    currentLeaves = [];
+
+    renderLeaves();
+
+    updatePreview();
+
+
+    document.getElementById(
+        "studentModal"
+    ).classList.add("show");
+
+}
+
+
+/* =========================================================
+   GENERATE ID
+========================================================= */
+
+function generateId(){
+
+    let number =
+        students.length + 1;
+
+
+    let id =
+        "SM" +
+        String(number)
+        .padStart(3,"0");
+
+
+    while(
+        students.some(
+            s => s.id === id
+        )
+    ){
+
+        number++;
+
+        id =
+            "SM" +
+            String(number)
+            .padStart(3,"0");
+
+    }
+
+
+    return id;
+
+}
+
+
+/* =========================================================
+   EDIT STUDENT
+========================================================= */
+
+let currentLeaves = [];
+
+
+function editStudent(id){
+
+    const student =
+        students.find(
+            s => s.id === id
+        );
+
+
+    if(!student){
+        return;
+    }
+
+
+    document.getElementById(
+        "modalTitle"
+    ).innerText =
+        "Edit Student";
+
+
+    document.getElementById(
+        "editingId"
+    ).value =
+        student.id;
+
+
+    document.getElementById(
+        "studentId"
+    ).value =
+        student.id;
+
+
+    document.getElementById(
+        "studentName"
+    ).value =
+        student.name;
+
+
+    document.getElementById(
+        "mobile"
+    ).value =
+        student.mobile.replace(
+            /^91/,
+            ""
+        );
+
+
+    document.getElementById(
+        "joiningDate"
+    ).value =
+        student.joiningDate;
+
+
+    document.getElementById(
+        "paidCheck"
+    ).checked =
+        student.paid;
+
+
+    currentLeaves =
+        JSON.parse(
+            JSON.stringify(
+                student.leaves || []
+            )
+        );
+
+
+    renderLeaves();
+
+    updatePreview();
+
+
+    document.getElementById(
+        "studentModal"
+    ).classList.add("show");
+
+}
+
+
+/* =========================================================
+   ADD LEAVE
+========================================================= */
+
+function addLeave(){
+
+    const from =
+        document.getElementById(
+            "leaveFrom"
+        ).value;
+
+
+    const to =
+        document.getElementById(
+            "leaveTo"
+        ).value;
+
+
+    if(!from || !to){
+
+        showToast(
+            "Please select both dates."
+        );
+
+        return;
+
+    }
+
+
+    if(to < from){
+
+        showToast(
+            "Return date cannot be before home date."
+        );
+
+        return;
+
+    }
+
+
+    currentLeaves.push({
+        from:from,
+        to:to
+    });
+
+
+    document.getElementById(
+        "leaveFrom"
+    ).value = "";
+
+
+    document.getElementById(
+        "leaveTo"
+    ).value = "";
+
+
+    renderLeaves();
+
+    updatePreview();
+
+}
+
+
+/* =========================================================
+   RENDER LEAVES
+========================================================= */
+
+function renderLeaves(){
+
+    const list =
+        document.getElementById(
+            "leaveList"
+        );
+
+
+    if(!currentLeaves.length){
+
+        list.innerHTML = `
+            <div class="muted"
+                 style="margin-top:10px">
+                No leave records added.
+            </div>
+        `;
+
+
+        document.getElementById(
+            "totalLeaveDays"
+        ).innerText =
+            "0 days";
+
+
+        return;
+
+    }
+
+
+    let total = 0;
+
+
+    list.innerHTML =
+        currentLeaves.map(
+            (leave,index) => {
+
+                const days =
+                    daysBetween(
+                        leave.from,
+                        leave.to
+                    );
+
+
+                total += days;
+
+
+                return `
+
+                    <div class="leaveItem">
+
+                        <span>
+
+                            🏠
+
+                            ${formatDate(
+                                leave.from
+                            )}
+
+                            →
+
+                            ${formatDate(
+                                leave.to
+                            )}
+
+                            <strong>
+                                (${days} day${days !== 1 ? "s" : ""})
+                            </strong>
+
+                        </span>
+
+                        <button
+                            type="button"
+                            class="removeLeave"
+                            onclick="removeLeave(${index})"
+                        >
+                            Remove
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+
+
+    document.getElementById(
+        "totalLeaveDays"
+    ).innerText =
+        total +
+        (total === 1 ? " day" : " days");
+
+}
+
+
+/* =========================================================
+   REMOVE LEAVE
+========================================================= */
+
+function removeLeave(index){
+
+    currentLeaves.splice(
+        index,
+        1
+    );
+
+    renderLeaves();
+
+    updatePreview();
+
+}
+
+
+/* =========================================================
+   PREVIEW
+========================================================= */
+
+function updatePreview(){
+
+    const joining =
+        document.getElementById(
+            "joiningDate"
+        ).value;
+
+
+    if(!joining){
+        return;
+    }
+
+
+    const end =
+        getMonthEnd(joining);
+
+
+    const days =
+        getDaysRemaining(joining);
+
+
+    const tempStudent = {
+
+        joiningDate:joining,
+
+        leaves:currentLeaves
+
+    };
+
+
+    const leaveDays =
+        calculateLeaveDays(
+            tempStudent
+        );
+
+
+    const deduction =
+        leaveDays * DAILY_RATE;
+
+
+    const finalFee =
+        calculateFee(
+            tempStudent
+        );
+
+
+    document.getElementById(
+        "previewJoined"
+    ).innerText =
+        formatDate(joining);
+
+
+    document.getElementById(
+        "previewEnd"
+    ).innerText =
+        formatDate(end);
+
+
+    document.getElementById(
+        "previewRemaining"
+    ).innerText =
+        isMonthComplete(joining)
+        ? "Month Complete"
+        : days + " days";
+
+
+    document.getElementById(
+        "previewFee"
+    ).innerText =
+        money(finalFee);
+
+
+    document.getElementById(
+        "previewDeduction"
+    ).value =
+        money(deduction);
+
+}
+
+
+/* =========================================================
+   SAVE STUDENT
+========================================================= */
+
+function saveStudent(event){
+
+    event.preventDefault();
+
+
+    const editingId =
+        document.getElementById(
+            "editingId"
+        ).value;
+
+
+    const id =
+        document.getElementById(
+            "studentId"
+        ).value;
+
+
+    const name =
+        document.getElementById(
+            "studentName"
+        ).value.trim();
+
+
+    let mobile =
+        document.getElementById(
+            "mobile"
+        ).value.trim();
+
+
+    const joiningDate =
+        document.getElementById(
+            "joiningDate"
+        ).value;
+
+
+    const paid =
+        document.getElementById(
+            "paidCheck"
+        ).checked;
+
+
+    if(!mobile.startsWith("91")){
+
+        mobile =
+            "91" + mobile;
+
+    }
+
+
+    const temporaryStudent = {
+
+        joiningDate:joiningDate,
+
+        leaves:currentLeaves
+
+    };
+
+
+    const fee =
+        calculateFee(
+            temporaryStudent
+        );
+
+
+    if(editingId){
+
+        const index =
+            students.findIndex(
+                s => s.id === editingId
+            );
+
+
+        if(index !== -1){
+
+            const old =
+                students[index];
+
+
+            students[index] = {
+
+                ...old,
+
+                id:id,
+
+                name:name,
+
+                mobile:mobile,
+
+                joiningDate:joiningDate,
+
+                leaves:
+                    JSON.parse(
+                        JSON.stringify(
+                            currentLeaves
+                        )
+                    ),
+
+                paid:paid,
+
+                paymentDate:
+                    paid
+                    ?
+                    (
+                        old.paymentDate ||
+                        new Date().toISOString()
+                    )
+                    :
+                    null,
+
+                paymentAmount:
+                    paid
+                    ?
+                    fee
+                    :
+                    0
+
+            };
+
+        }
+
+        showToast(
+            "Student details updated."
+        );
+
+    }else{
+
+        students.push({
+
+            id:id,
+
+            name:name,
+
+            mobile:mobile,
+
+            joiningDate:joiningDate,
+
+            leaves:
+                JSON.parse(
+                    JSON.stringify(
+                        currentLeaves
+                    )
+                ),
+
+            paid:paid,
+
+            paymentDate:
+                paid
+                ?
+                new Date().toISOString()
+                :
+                null,
+
+            paymentAmount:
+                paid
+                ?
+                fee
+                :
+                0
+
+        });
+
+
+        showToast(
+            "Student added successfully."
+        );
+
+    }
+
+
+    saveData();
+
+    closeModal();
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   MARK PAID
+========================================================= */
+
+function markPaid(id){
+
+    const student =
+        students.find(
+            s => s.id === id
+        );
+
+
+    if(!student){
+        return;
+    }
+
+
+    student.paid = true;
+
+    student.paymentDate =
+        new Date().toISOString();
+
+    student.paymentAmount =
+        calculateFee(student);
+
+
+    saveData();
+
+    renderAll();
+
+
+    showToast(
+        student.name +
+        " marked as paid."
+    );
+
+}
+
+
+/* =========================================================
+   UNDO PAYMENT
+========================================================= */
+
+function undoPayment(id){
+
+    const student =
+        students.find(
+            s => s.id === id
+        );
+
+
+    if(!student){
+        return;
+    }
+
+
+    if(!confirm(
+        "Mark this student as unpaid?"
+    )){
+        return;
+    }
+
+
+    student.paid = false;
+
+    student.paymentDate = null;
+
+    student.paymentAmount = 0;
+
+
+    saveData();
+
+    renderAll();
+
+}
+
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+function deleteStudent(id){
+
+    const student =
+        students.find(
+            s => s.id === id
+        );
+
+
+    if(!student){
+        return;
+    }
+
+
+    if(!confirm(
+        "Delete " +
+        student.name +
+        "?"
+    )){
+        return;
+    }
+
+
+    students =
+        students.filter(
+            s => s.id !== id
+        );
+
+
+    saveData();
+
+    renderAll();
+
+    showToast(
+        "Student deleted."
+    );
+
+}
+
+
+/* =========================================================
+   WHATSAPP REMINDER
+========================================================= */
+
+function sendWhatsApp(id){
+
+    const student =
+        students.find(
+            s => s.id === id
+        );
+
+
+    if(!student){
+        return;
+    }
+
+
+    const fee =
+        calculateFee(student);
+
+
+    const leave =
+        calculateLeaveDays(student);
+
+
+    const message =
+
+`Hello ${student.name},
+
+This is a reminder from Sharma Mess.
+
+Student ID: ${student.id}
+
+Billing Period:
+${formatDate(student.joiningDate)}
+to
+${formatDate(getMonthEnd(student.joiningDate))}
+
+Home Leave: ${leave} day(s)
+
+Mess Fee Due: ${money(fee)}
+
+Please make the payment.
+
+Thank you,
+Sharma Mess`;
+
+
+    window.open(
+        "https://wa.me/" +
+        student.mobile +
+        "?text=" +
+        encodeURIComponent(message),
+        "_blank"
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
+
+function closeModal(){
+
+    document.getElementById(
+        "studentModal"
+    ).classList.remove("show");
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.innerText =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        function(){
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+        2500
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   RENDER EVERYTHING
+========================================================= */
+
+function renderAll(){
+
+    updateDashboard();
+
+    renderTable();
+
+}
+
+
+/* =========================================================
+   CLOSE WHEN CLICKING OUTSIDE
+========================================================= */
+
+document
+    .getElementById("studentModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(event.target === this){
+                closeModal();
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
+
+renderAll();
+
+</script>
+
+</body>
+</html>
